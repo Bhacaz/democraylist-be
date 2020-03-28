@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   resource :tracks, default: :json do
     get :search
     get ':id', to: 'tracks#show'
+    patch ':id/up_vote', to: 'tracks#up_vote'
+    patch ':id/down_vote', to: 'tracks#down_vote'
   end
 
   get '/auth/spotify/callback', to: 'auth#spotify'

@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/petalmd/bright_serializer
+  revision: 8121bb03055b026461150d399538f7889c64b696
+  specs:
+    bright_serializer (0.1.0)
+      oj (~> 3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -119,6 +126,7 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
+    oj (3.10.5)
     omniauth (1.9.1)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
@@ -226,6 +234,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.4.2)
+  bright_serializer!
   byebug
   figaro
   httparty
