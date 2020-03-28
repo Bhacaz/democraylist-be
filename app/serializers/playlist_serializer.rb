@@ -5,6 +5,8 @@ class PlaylistSerializer
 
   attribute :tracks do |object, params|
     tracks = object.real_tracks
+    next [] if tracks.empty?
+
     tracks_data = RSpotify::Track.find(tracks.map(&:spotify_id)).index_by(&:id)
     tracks.map do |track|
       tracks_data[track.spotify_id].as_json.merge(TrackSerializer.new(track, params: params).to_hash)
@@ -13,6 +15,8 @@ class PlaylistSerializer
 
   attribute :tracks_submission do |object, params|
     tracks = object.submission_tracks
+    next [] if tracks.empty?
+
     tracks_data = RSpotify::Track.find(tracks.map(&:spotify_id)).index_by(&:id)
     tracks.map do |track|
       tracks_data[track.spotify_id].as_json.merge(TrackSerializer.new(track, params: params).to_hash)
