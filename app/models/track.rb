@@ -5,5 +5,11 @@ class Track < ApplicationRecord
 
   validates :playlist_id, presence: true
   validates :added_by_id, presence: true
+
+  def vote_score
+    up = votes.to_a.count { |vote| vote.vote == 'up' }
+    down = votes.to_a.count { |vote| vote.vote == 'down' }
+    up - down
+  end
 end
 
