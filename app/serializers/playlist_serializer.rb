@@ -3,6 +3,10 @@ class PlaylistSerializer
 
   attributes *Playlist.attribute_names.map(&:to_sym)
 
+  attribute :subscribed do |object, params|
+    Subscription.exists?(playlist_id: object.id, user_id: params[:auth_user_id])
+  end
+
   attribute :tracks do |object, params|
     tracks = object.real_tracks
     next [] if tracks.empty?

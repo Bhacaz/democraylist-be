@@ -7,9 +7,12 @@ Rails.application.routes.draw do
 
   resource :playlists do
     get '/', to: 'playlists#index'
+    get '/explore', to: 'playlists#explore'
     post '/create', to: 'playlists#create'
     get '/:id', to: 'playlists#show'
     post '/:id/add_track', to: 'playlists#add_track'
+    post '/:id/subscribed', to: 'playlists#subscribed'
+    post '/:id/unsubscribed', to: 'playlists#unsubscribed'
   end
   
   resource :tracks, default: :json do

@@ -4,6 +4,7 @@ class Playlist < ApplicationRecord
   validates :name, presence: true
   validates :user_id, presence: true
   has_many :tracks
+  has_many :subscriptions
 
   def real_tracks
     positive_tracks = tracks.to_a
