@@ -27,6 +27,11 @@ class PlaylistsController < ApplicationApiController
     render json: PlaylistSerializer.new(Playlist.first(10), fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
+  def subscriptions
+    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
+    render json: PlaylistSerializer.new(Playlist.joins(:subscriptions).merge(Subscription.where(user_id: auth_user.id)), fields: attributes, params: { auth_user_id: auth_user.id })
+  end
+
   def subscribed
     Subscription.create! user_id: auth_user.id, playlist_id: params[:id]
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]

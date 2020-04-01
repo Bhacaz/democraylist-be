@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resource :playlists do
     get '/', to: 'playlists#index'
     get '/explore', to: 'playlists#explore'
+    get '/subscriptions', to: 'playlists#subscriptions'
     post '/create', to: 'playlists#create'
     get '/:id', to: 'playlists#show'
     post '/:id/add_track', to: 'playlists#add_track'
