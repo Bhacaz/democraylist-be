@@ -6,4 +6,11 @@ class Vote < ApplicationRecord
 
   validates :user_id, presence: true, uniqueness: { scope: :track_id }
   validates :track_id, presence: true
+
+  after_commit :sync_tracks_with_spotify
+
+  def sync_tracks_with_spotify
+    r_playlist = RSpotify::Playlist.find(track.playlist.user.spotify_id, track.playlist.spotify_id)
+    r_playlist.replace_tracks!(track.playlist.real_tracks)
+  end
 end

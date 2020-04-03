@@ -10,7 +10,9 @@ class PlaylistsController < ApplicationApiController
   end
 
   def create
-    Playlist.create! user_id: auth_user.id, **playlist_params
+    new_playlist = Playlist.create! user_id: auth_user.id, **playlist_params
+    spotify_playlist = RSpotify::User.find(auth_user.spotify_id).create_playlist!(playlist_params[:name], public: false, collaborative: true, description: playlist_params[:description])
+    new_playlist.update! spotify_id: spotify_playlist.id
     render json: Playlist.where(user_id: auth_user.id)
   end
 

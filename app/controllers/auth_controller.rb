@@ -21,7 +21,7 @@ class AuthController < ApplicationController
     query_params = {
       response_type: 'code',
       client_id: ENV['spotify_client_id'],
-      scope: 'user-read-email playlist-read-private playlist-read-collaborative user-library-read user-library-modify',
+      scope: 'user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-library-read user-library-modify',
       redirect_uri: 'http://localhost:4200/auth/spotify/callback'
     }
 

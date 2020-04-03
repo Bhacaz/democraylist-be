@@ -11,5 +11,8 @@ class Track < ApplicationRecord
     down = votes.to_a.count { |vote| vote.vote == 'down' }
     up - down
   end
-end
 
+  def uri
+    "spotify:track:#{spotify_id}"
+  end
+end
