@@ -3,6 +3,10 @@ class PlaylistSerializer
 
   attributes *Playlist.attribute_names.map(&:to_sym)
 
+  attribute :image_url do |object|
+    RSpotify::Playlist.find_by_id(object.spotify_id).images.first['url'] if object.spotify_id
+  end
+
   attribute :subscribed do |object, params|
     Subscription.exists?(playlist_id: object.id, user_id: params[:auth_user_id])
   end

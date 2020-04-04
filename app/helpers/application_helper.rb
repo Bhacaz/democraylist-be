@@ -10,4 +10,10 @@ module ApplicationHelper
         Rails.cache.read(token)
       end
   end
+
+  def authenticate_request
+    if request.headers['HTTP_AUTHORIZATION'].split(' ').first != 'Bearer'
+      render json: { error: command.errors }, status: :unauthorized
+    end
+  end
 end

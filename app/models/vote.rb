@@ -10,6 +10,8 @@ class Vote < ApplicationRecord
   after_commit :sync_tracks_with_spotify
 
   def sync_tracks_with_spotify
+    return unless track.playlist.spotify_id
+
     r_playlist = RSpotify::Playlist.find(track.playlist.user.spotify_id, track.playlist.spotify_id)
     r_playlist.replace_tracks!(track.playlist.real_tracks)
   end

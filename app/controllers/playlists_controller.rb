@@ -35,15 +35,19 @@ class PlaylistsController < ApplicationApiController
   end
 
   def subscribed
-    Subscription.create! user_id: auth_user.id, playlist_id: params[:id]
+    playlist = Playlist.find(params[:id])
+    Subscription.create! user_id: auth_user.id, playlist_id: playlist.id
+    RSpotify::User.find(auth_user.spotify_id).follow(RSpotify::Playlist.find_by_id(playlist.spotify_id))
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
-    render json: PlaylistSerializer.new(Playlist.find(params[:id]), fields: attributes, params: { auth_user_id: auth_user.id })
+    render json: PlaylistSerializer.new(playlist, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
   def unsubscribed
-    Subscription.find_by!(user_id: auth_user.id, playlist_id: params[:id]).destroy!
+    playlist = Playlist.find(params[:id])
+    Subscription.find_by!(user_id: auth_user.id, playlist_id: playlist.id).destroy!
+    RSpotify::User.find(auth_user.spotify_id).unfollow(RSpotify::Playlist.find_by_id(playlist.spotify_id))
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
-    render json: PlaylistSerializer.new(Playlist.find(params[:id]), fields: attributes, params: { auth_user_id: auth_user.id })
+    render json: PlaylistSerializer.new(playlist, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
   private
