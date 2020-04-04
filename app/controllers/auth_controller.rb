@@ -3,7 +3,7 @@ require 'httparty'
 class AuthController < ApplicationController
 
   skip_before_action :verify_authenticity_token, only: [:spotify_get_token]
-  skip_before_action :authenticate_request, except: :user
+  skip_before_action :authenticate_request, except: [:user, :refresh_access_token]
 
   def spotify
     @spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
@@ -73,5 +73,12 @@ class AuthController < ApplicationController
 
   def user
     render json: { user: auth_user }
+  end
+
+  def refresh_access_token
+    access_token = RSpotify::User.send(:refresh_token, auth_user.spotify_id)
+    Rails.cache.write(access_token, auth_user, expires_in: 60.minutes)
+
+    render json: { access_token: access_token }
   end
 end

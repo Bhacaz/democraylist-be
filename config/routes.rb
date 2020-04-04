@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get '/auth/spotify/callback', to: 'auth#spotify'
   get '/auth/spotify_login_url', to: 'auth#spotify_login_url'
   get '/auth/user', to: 'auth#user'
+  get '/auth/refresh_access_token', to: 'auth#refresh_access_token'
   post '/auth/spotify_get_token', to: 'auth#spotify_get_token'
 
   get '/login', to: 'auth#login'
