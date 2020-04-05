@@ -7,7 +7,7 @@ module ApplicationHelper
     @auth_user ||=
       begin
         token = request.headers['HTTP_AUTHORIZATION'].split(' ').last
-        Rails.cache.read(token)
+        User.find_by!(access_token: token)
       end
   end
 

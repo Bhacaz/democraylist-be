@@ -65,8 +65,7 @@ class AuthController < ApplicationController
     user.save! if user.changed?
 
     r_user = RSpotify::User.new(**Hashie::Mash.new(response), 'credentials' => credentials)
-    user = User.find_by!(spotify_id: r_user.id)
-    Rails.cache.write(access_token, user, expires_in: 60.minutes)
+    user = User.find_by!(spotify_id: r_user.id).update!(access_token: access_token)
 
     render json: { access_token: access_token, user: r_user.as_json.merge(user.as_json) }
   end
@@ -77,7 +76,7 @@ class AuthController < ApplicationController
 
   def refresh_access_token
     access_token = RSpotify::User.send(:refresh_token, auth_user.spotify_id)
-    Rails.cache.write(access_token, auth_user, expires_in: 60.minutes)
+    User.find_by!(spotify_id: auth_user.spotify_id).update!(access_token: access_token)
 
     render json: { access_token: access_token }
   end
