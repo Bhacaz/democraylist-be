@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def authenticate_request
-    if request.headers['HTTP_AUTHORIZATION'].split(' ').first != 'Bearer'
+    if request.headers['HTTP_AUTHORIZATION'].split(' ').first != 'Bearer' || auth_user.nil?
       render json: { error: command.errors }, status: :unauthorized
     end
   end
