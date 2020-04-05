@@ -65,7 +65,8 @@ class AuthController < ApplicationController
     user.save! if user.changed?
 
     r_user = RSpotify::User.new(**Hashie::Mash.new(response), 'credentials' => credentials)
-    user = User.find_by!(spotify_id: r_user.id).update!(access_token: access_token)
+    user = User.find_by!(spotify_id: r_user.id)
+    user.update!(access_token: access_token)
 
     render json: { access_token: access_token, user: r_user.as_json.merge(user.as_json) }
   end
