@@ -23,7 +23,7 @@ class AuthController < ApplicationController
       response_type: 'code',
       client_id: ENV['spotify_client_id'],
       scope: 'user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-library-read user-library-modify',
-      redirect_uri: 'http://localhost:4200/auth/spotify/callback'
+      redirect_uri: ENV['democraylist_fe_host'] + '/auth/spotify/callback',
     }
 
     render json: { url: 'https://accounts.spotify.com/authorize?' + query_params.to_query }
