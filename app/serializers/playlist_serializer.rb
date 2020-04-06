@@ -4,11 +4,35 @@ class PlaylistSerializer
   attributes *Playlist.attribute_names.map(&:to_sym)
 
   attribute :image_url do |object|
-    RSpotify::Playlist.find_by_id(object.spotify_id).images.first['url'] if object.spotify_id
+    RSpotify::Playlist.find_by_id(object.spotify_id).images.first&.fetch('url') if object.spotify_id
+  end
+
+  attribute :created_by do |object|
+    {
+      id: object.user.id,
+      display_name: object.user.name,
+      spotify_id: object.user.spotify_id
+    }
   end
 
   attribute :subscribed do |object, params|
     Subscription.exists?(playlist_id: object.id, user_id: params[:auth_user_id])
+  end
+
+  attribute :up_vote_count do |object|
+    Vote.joins(track: :playlist).merge(Playlist.where(id: object.id)).where(vote: :up).size
+  end
+
+  attribute :down_vote_count do |object|
+    Vote.joins(track: :playlist).merge(Playlist.where(id: object.id)).where(vote: :down).size
+  end
+
+  attribute :subscribers do |object|
+    object.subscriptions.size
+  end
+
+  attribute :tracks_count do |object|
+    object.real_tracks.size
   end
 
   attribute :tracks do |object, params|
@@ -29,5 +53,9 @@ class PlaylistSerializer
     tracks.map do |track|
       tracks_data[track.spotify_id].as_json.merge(TrackSerializer.new(track, params: params).to_hash)
     end
+  end
+
+  attribute :tracks_submission_count do |object|
+    object.submission_tracks.size
   end
 end

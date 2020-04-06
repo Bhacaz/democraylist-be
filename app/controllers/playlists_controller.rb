@@ -30,7 +30,7 @@ class PlaylistsController < ApplicationApiController
   end
 
   def explore
-    # TODO add algo to fetch the most popular playlist be subcriptions
+    # TODO add algo to fetch the most popular playlist be subcriptionsx
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
     render json: PlaylistSerializer.new(Playlist.first(10), fields: attributes, params: { auth_user_id: auth_user.id })
   end
