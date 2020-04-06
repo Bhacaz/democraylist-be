@@ -10,4 +10,12 @@ class TrackSerializer
   attribute :my_vote do |object, params|
     object.votes.detect { |vote| vote.user_id == params[:auth_user_id] }&.vote
   end
+
+  attribute :added_by do |object|
+    {
+      id: object.user.id,
+      name: object.user.name,
+      spotify_id: object.user.spotify_id,
+    }
+  end
 end
