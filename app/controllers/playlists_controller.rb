@@ -11,7 +11,7 @@ class PlaylistsController < ApplicationApiController
 
   def create
     new_playlist = Playlist.create! user_id: auth_user.id, **playlist_params
-    spotify_playlist = RSpotify::User.find(auth_user.spotify_id).create_playlist!(playlist_params[:name], public: false, collaborative: true, description: playlist_params[:description])
+    spotify_playlist = RSpotify::User.find(auth_user.spotify_id).create_playlist!(playlist_params[:name], public: true, collaborative: true, description: playlist_params[:description])
     new_playlist.update! spotify_id: spotify_playlist.id
     render json: Playlist.where(user_id: auth_user.id)
   end
@@ -32,7 +32,9 @@ class PlaylistsController < ApplicationApiController
   def explore
     # TODO add algo to fetch the most popular playlist be subcriptionsx
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
-    render json: PlaylistSerializer.new(Playlist.first(10), fields: attributes, params: { auth_user_id: auth_user.id })
+    subscription_ids = Playlist.joins(:subscriptions).merge(Subscription.where(user_id: auth_user.id)).ids
+    query = Playlist.where.not(user_id: auth_user.id).where.not(id: subscription_ids)
+    render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
   def subscriptions
