@@ -7,7 +7,10 @@ module ApplicationHelper
     @auth_user ||=
       begin
         token = request.headers['HTTP_AUTHORIZATION'].split(' ').last
-        User.find_by!(access_token: token)
+        user = User.find_by!(access_token: token)
+        user_credentials = RSpotify::User.class_variable_get('@@users_credentials')
+        user_credentials[user.spotify_id]['token'] = token
+        user
       end
   end
 
