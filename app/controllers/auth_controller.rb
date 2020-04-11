@@ -1,6 +1,6 @@
 require 'httparty'
 
-class AuthController < ApplicationController
+class AuthController < ApplicationApiController
 
   skip_before_action :authenticate_request, except: [:user, :refresh_access_token]
 

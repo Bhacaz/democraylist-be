@@ -38,5 +38,9 @@ module Democraylist
         resource '*', :headers => :any, :methods => [:get, :post, :patch, :delete, :options]
       end
     end
+
+    config.action_dispatch.rescue_responses.merge!(
+      'AuthorizationException' => :unauthorized
+    )
   end
 end
