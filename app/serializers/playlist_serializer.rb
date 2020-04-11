@@ -7,6 +7,10 @@ class PlaylistSerializer
     RSpotify::Playlist.find_by_id(object.spotify_id).images.first&.fetch('url') if object.spotify_id
   end
 
+  attribute :uri do |object|
+    "spotify:playlist:#{object.spotify_id}"
+  end
+
   attribute :created_by do |object|
     {
       id: object.user.id,
