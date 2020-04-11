@@ -5,7 +5,7 @@ class PlaylistsController < ApplicationApiController
   end
 
   def show
-    playlist = Playlist.find(params[:id])
+    playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
     render json: PlaylistSerializer.new(playlist, params: { auth_user_id: auth_user.id })
   end
 
@@ -17,7 +17,7 @@ class PlaylistsController < ApplicationApiController
   end
 
   def add_track
-    playlist = Playlist.find(params[:id])
+    playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
     playlist.tracks.create! playlist_id: params[:id], added_by_id: auth_user.id, spotify_id: params[:track_id]
 
     render json: PlaylistSerializer.new(playlist, params: { auth_user_id: auth_user.id })
@@ -43,7 +43,7 @@ class PlaylistsController < ApplicationApiController
   end
 
   def subscribed
-    playlist = Playlist.find(params[:id])
+    playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
     Subscription.create! user_id: auth_user.id, playlist_id: playlist.id
     RSpotify::User.find(auth_user.spotify_id).follow(RSpotify::Playlist.find_by_id(playlist.spotify_id))
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
@@ -51,7 +51,7 @@ class PlaylistsController < ApplicationApiController
   end
 
   def unsubscribed
-    playlist = Playlist.find(params[:id])
+    playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
     Subscription.find_by!(user_id: auth_user.id, playlist_id: playlist.id).destroy!
     RSpotify::User.find(auth_user.spotify_id).unfollow(RSpotify::Playlist.find_by_id(playlist.spotify_id))
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
