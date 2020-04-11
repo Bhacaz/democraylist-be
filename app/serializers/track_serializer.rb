@@ -7,6 +7,14 @@ class TrackSerializer
     object.vote_score
   end
 
+  attribute :up_vote_count do |object|
+    object.votes.count { |vote| vote.up? }
+  end
+
+  attribute :down_vote_count do |object|
+    object.votes.count { |vote| vote.down? }
+  end
+
   attribute :my_vote do |object, params|
     object.votes.detect { |vote| vote.user_id == params[:auth_user_id] }&.vote
   end
