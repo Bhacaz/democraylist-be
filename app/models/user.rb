@@ -4,4 +4,8 @@ class User < ApplicationRecord
   has_many :playlists
   has_many :votes
   has_many :subscriptions
+
+  def rspotify_user
+    RSpotify::User.new('id' => spotify_id, 'credentials' => { 'token' => access_token })
+  end
 end
