@@ -15,8 +15,6 @@ class Playlist < ApplicationRecord
 
   def submission_tracks
     real_tracks_ids = real_tracks.map(&:id)
-    sub_tracks = tracks.reject { |track| real_tracks_ids.include? track.id }
-    sub_tracks.sort_by! { |track| [-track.vote_score, -(track.votes.max_by(&:updated_at)&.updated_at&.to_i || 1)] }
-    sub_tracks || []
+    tracks.where.not(id: real_tracks_ids).order(created_at: :desc)
   end
 end
