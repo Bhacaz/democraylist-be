@@ -12,7 +12,7 @@ class Vote < ApplicationRecord
   def sync_tracks_with_spotify
     return unless track.playlist.spotify_id
 
-    return if vote.user_id != track.playlist.user_id
+    return if user_id != track.playlist.user_id
 
     SyncPlaylistJob.perform_later(track.playlist_id)
   end
