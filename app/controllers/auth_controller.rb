@@ -21,7 +21,7 @@ class AuthController < ApplicationApiController
     query_params = {
       response_type: 'code',
       client_id: ENV['spotify_client_id'],
-      scope: 'user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-library-read user-library-modify',
+      scope: 'user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public',
       redirect_uri: ENV['democraylist_fe_host'] + '/auth/spotify/callback',
     }
 
@@ -66,6 +66,9 @@ class AuthController < ApplicationApiController
     r_user = RSpotify::User.new(**Hashie::Mash.new(response), 'credentials' => credentials)
     user = User.find_by!(spotify_id: r_user.id)
     user.update!(access_token: access_token)
+
+    # Every time the ower of the playlist login sync own playlists
+    user.playlists.each { |playlist| SyncPlaylistJob.perform_later(playlist.id) }
 
     render json: { access_token: access_token, user: r_user.as_json.merge(user.as_json) }
   end

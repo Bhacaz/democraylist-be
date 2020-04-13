@@ -10,8 +10,10 @@ module ApplicationHelper
         user = User.find_by(access_token: token)
         return unless user # Return nil if no user is found
 
-        user_credentials = RSpotify::User.class_variable_get('@@users_credentials')
-        user_credentials[user.spotify_id]['token'] = token
+        if RSpotify::User.class_variable_defined?('@@users_credentials')
+          user_credentials = RSpotify::User.class_variable_get('@@users_credentials')
+          user_credentials[user.spotify_id]['token'] = token
+        end
         user
       end
   end

@@ -12,11 +12,8 @@ class Vote < ApplicationRecord
   def sync_tracks_with_spotify
     return unless track.playlist.spotify_id
 
-    begin
-      r_playlist = RSpotify::Playlist.find(track.playlist.user.spotify_id, track.playlist.spotify_id)
-      r_playlist.replace_tracks!(track.playlist.real_tracks)
-    rescue => e
-      puts e
-    end
+    return if vote.user_id != track.playlist.user_id
+
+    SyncPlaylistJob.perform_later(track.playlist_id)
   end
 end
