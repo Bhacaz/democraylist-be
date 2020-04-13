@@ -54,3 +54,4 @@ gem "figaro"
 gem 'rack-cors', :require => 'rack/cors'
 gem 'httparty', require: false
 gem 'bright_serializer', git: 'https://github.com/petalmd/bright_serializer'
+gem 'sidekiq'

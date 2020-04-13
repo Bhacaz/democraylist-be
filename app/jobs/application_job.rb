@@ -4,4 +4,9 @@ class ApplicationJob < ActiveJob::Base
 
   # Most jobs are safe to ignore if the underlying records are no longer available
   # discard_on ActiveJob::DeserializationError
+  #
+  #   3 Terminal to make it work
+  # $ redis-server
+  # $ bundle exec sidekiq
+  # $ bin/rails s
 end

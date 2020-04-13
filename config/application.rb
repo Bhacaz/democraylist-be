@@ -42,5 +42,6 @@ module Democraylist
     config.action_dispatch.rescue_responses.merge!(
       'AuthorizationException' => :unauthorized
     )
+    config.active_job.queue_adapter = :sidekiq
   end
 end
