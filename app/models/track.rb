@@ -5,6 +5,7 @@ class Track < ApplicationRecord
 
   validates :playlist_id, presence: true
   validates :added_by_id, presence: true
+  validates :spotify_id, uniqueness: { scope: :playlist_id }
 
   def vote_score
     up = votes.to_a.count { |vote| vote.vote == 'up' }
