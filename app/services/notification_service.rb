@@ -40,7 +40,7 @@ class NotificationService
         badge: badge,
         title: title,
         body: body,
-        data: data
+        click_action: data
       }
     }
   end
