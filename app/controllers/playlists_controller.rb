@@ -81,6 +81,17 @@ class PlaylistsController < ApplicationApiController
       hash
     end
 
+    stats.sort_by! { |stat| -stat[:submission_count] }
+
+    stats << {
+      user: { display_name: 'Total' },
+      submission_count: stats.sum { |stat| stat[:submission_count] },
+      submission_upvote_count: stats.sum { |stat| stat[:submission_upvote_count] },
+      submission_downvote_count: stats.sum { |stat| stat[:submission_downvote_count] },
+      upvote_count: stats.sum { |stat| stat[:upvote_count] },
+      downvote_count: stats.sum { |stat| stat[:downvote_count] }
+    }
+
     render json: stats
   end
 
