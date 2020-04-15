@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :users do
     get :playlists
+    post '/push_notif_preference', to: 'users#create_push_notif_preference', on: :collection
   end
 
   resource :playlists do

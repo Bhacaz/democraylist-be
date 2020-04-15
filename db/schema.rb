@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_29_235534) do
+ActiveRecord::Schema.define(version: 2020_04_14_011452) do
 
   create_table "playlists", force: :cascade do |t|
     t.string "spotify_id"
@@ -21,6 +21,12 @@ ActiveRecord::Schema.define(version: 2020_03_29_235534) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "song_size"
     t.index ["user_id"], name: "index_playlists_on_user_id"
+  end
+
+  create_table "push_notif_preferences", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "preference"
+    t.index ["user_id"], name: "index_push_notif_preferences_on_user_id"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -49,6 +55,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_235534) do
     t.string "spotify_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "access_token"
   end
 
   create_table "votes", force: :cascade do |t|

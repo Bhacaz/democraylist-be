@@ -65,6 +65,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def create_push_notif_preference
+    pref = PushNotifPreference.find_or_initialize_by user_id: auth_user.id
+    pref.preference = JSON.parse(params[:preference])
+    pref.save!
+    render json: :ok, status: :created
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
