@@ -24,12 +24,6 @@ class PlaylistsController < ApplicationApiController
     render json: PlaylistSerializer.new(playlist, params: { auth_user_id: auth_user.id })
   end
 
-  def remove_track
-    Track.find_by!(playlist_id: params[:id], spotify_id: params[:track_id]).destroy!
-
-    render json: :ok
-  end
-
   def explore
     # TODO add algo to fetch the most popular playlist be subcriptionsx
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]

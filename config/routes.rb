@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     post '/create', to: 'playlists#create'
     get '/:id', to: 'playlists#show'
     post '/:id/add_track', to: 'playlists#add_track'
-    delete '/:id/remove_track', to: 'playlists#remove_track'
     post '/:id/subscribed', to: 'playlists#subscribed'
     post '/:id/unsubscribed', to: 'playlists#unsubscribed'
   end
@@ -25,6 +24,7 @@ Rails.application.routes.draw do
     get ':id', to: 'tracks#show'
     patch ':id/up_vote', to: 'tracks#up_vote'
     patch ':id/down_vote', to: 'tracks#down_vote'
+    delete ':id', to: 'tracks#delete'
   end
 
   get '/auth/spotify/callback', to: 'auth#spotify'

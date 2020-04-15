@@ -22,4 +22,8 @@ class TracksController < ApplicationApiController
     vote.save!
     render json: vote
   end
+
+  def delete
+    Track.find(params[:id]).destroy!
+  end
 end
