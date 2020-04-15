@@ -30,7 +30,7 @@ class NotificationService
     rspotify_track = RSpotify::Track.find(track.spotify_id)
     playlist_name = track.playlist.name
     title = "Democraylist - #{playlist_name}"
-    body = "#{rspotify_track.name} (#{rspotify_track.artists.map(&:name).join(' - ')})\nAdded by #{user_name}"
+    body = "#{rspotify_track.name} - #{rspotify_track.artists.map(&:name).join(' - ')}\nAdded by #{user_name}"
 
     # Link to song in playlist
     data = ENV['democraylist_fe_host'] + "/playlists/#{track.playlist_id}?track_id=#{track.id}"
