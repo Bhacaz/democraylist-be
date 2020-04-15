@@ -1,13 +1,14 @@
 class NotificationService
-  def self.send_push(user)
-    notification_data = user.push_notif_preference.preference
+  def self.broadcast_added_track(track)
+    user_ids = track.playlist.subscriptions.map(&:user_id) << track.playlist.user_id
+    user_ids.delete(track.added_by_id)
+    User.joins(:push_notif_preference).where(id: user_ids).each do |user|
+      send_push(build_message(track), user)
+    end
+  end
 
-    message = {
-      notification: {
-        title: "title",
-        body: "body"
-      }
-    }
+  def self.send_push(message, user)
+    notification_data = user.push_notif_preference.preference
 
     Webpush.payload_send(endpoint: notification_data['endpoint'],
                          message: message.to_json,
@@ -20,5 +21,27 @@ class NotificationService
                            private_key: ENV['push_private_key']
                          }
     )
+  end
+
+  def self.build_message(track)
+    badge = ENV['democraylist_fe_host'] + '/favicon.ico'
+    icon = ENV['democraylist_fe_host'] + '/assets/icons/icon-192x192.png'
+    user_name = track.user.name
+    rspotify_track = RSpotify::Track.find(track.spotify_id)
+    playlist_name = track.playlist.name
+    title = "Democraylist - #{playlist_name}"
+    body = "#{rspotify_track.name} (#{rspotify_track.artists.map(&:name).join(' - ')})\nAdded by #{user_name}"
+
+    # Link to song in playlist
+    data = ENV['democraylist_fe_host'] + "/playlists/#{track.playlist_id}?track_id=#{track.id}"
+    {
+      notification: {
+        icon: icon,
+        badge: badge,
+        title: title,
+        body: body,
+        data: data
+      }
+    }
   end
 end

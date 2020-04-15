@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :playlists
   has_many :votes
   has_many :subscriptions
+  has_many :tracks, foreign_key: :added_by_id
   has_one :push_notif_preference
 
   def rspotify_user
