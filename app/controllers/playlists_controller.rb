@@ -54,6 +54,36 @@ class PlaylistsController < ApplicationApiController
     render json: PlaylistSerializer.new(playlist, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
+  def stats
+    playlist = Playlist.includes(tracks: [:user, { votes: :user }]).find(params[:id])
+
+    # Track sunmittes
+    # Track upvoted
+    # Tack downvoted
+    # Upvote given
+    # Downvote given
+
+    implicated_users = playlist.tracks.map(&:user)
+    implicated_users.concat(playlist.tracks.flat_map { |track| track.votes.map(&:user) })
+    implicated_users.uniq!
+
+    rspotify_user = implicated_users.map { |user| RSpotify::User.find(user.spotify_id) }.index_by(&:id)
+
+    stats = implicated_users.map do |user|
+      hash = {}
+      hash[:user] = rspotify_user[user.spotify_id].as_json.merge(user.as_json)
+      hash[:user].delete('access_token')
+      hash[:submission_count] = playlist.tracks.count { |track| track.added_by_id == user.id }
+      hash[:submission_upvote_count] = playlist.tracks.select { |track| track.added_by_id == user.id }.sum { |track| track.votes.up.size }
+      hash[:submission_downvote_count] = playlist.tracks.select { |track| track.added_by_id == user.id }.sum { |track| track.votes.down.size }
+      hash[:upvote_count] = playlist.tracks.flat_map { |track| track.votes.up }.count { |vote| vote.user_id == user.id }
+      hash[:downvote_count] = playlist.tracks.flat_map { |track| track.votes.down }.count { |vote| vote.user_id == user.id }
+      hash
+    end
+
+    render json: stats
+  end
+
   private
 
   def playlist_params

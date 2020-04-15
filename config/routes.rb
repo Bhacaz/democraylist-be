@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get '/subscriptions', to: 'playlists#subscriptions'
     post '/create', to: 'playlists#create'
     get '/:id', to: 'playlists#show'
+    get '/:id/stats', to: 'playlists#stats'
     post '/:id/add_track', to: 'playlists#add_track'
     post '/:id/subscribed', to: 'playlists#subscribed'
     post '/:id/unsubscribed', to: 'playlists#unsubscribed'
