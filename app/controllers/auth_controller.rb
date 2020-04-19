@@ -17,6 +17,11 @@ class AuthController < ApplicationApiController
 
   def login; end
 
+  def logout
+    User.find(auth_user.id).update! access_token: nil
+    render json: :ok
+  end
+
   def spotify_login_url
     query_params = {
       response_type: 'code',
