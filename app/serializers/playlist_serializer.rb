@@ -62,4 +62,18 @@ class PlaylistSerializer
   attribute :tracks_submission_count do |object|
     object.submission_tracks.size
   end
+
+  attribute :tracks_archived do |object, params|
+    tracks = object.archived_tracks
+    next [] if tracks.empty?
+
+    tracks_data = RSpotify::Track.find(tracks.map(&:spotify_id)).index_by(&:id)
+    tracks.map do |track|
+      tracks_data[track.spotify_id].as_json.merge(TrackSerializer.new(track, params: params).to_hash)
+    end
+  end
+
+  attribute :tracks_archived_count do |object|
+    object.archived_tracks.size
+  end
 end
