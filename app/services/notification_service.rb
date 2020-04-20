@@ -25,7 +25,7 @@ class NotificationService
 
   def self.build_message(track)
     badge = ENV['democraylist_fe_host'] + '/favicon.ico'
-    icon = ENV['democraylist_fe_host'] + '/assets/icons/icon-192x192.png'
+    icon = RSpotify::Track.find(track.spotify_id).album.images[2][:url]
     user_name = track.user.name
     rspotify_track = RSpotify::Track.find(track.spotify_id)
     playlist_name = track.playlist.name
@@ -33,14 +33,14 @@ class NotificationService
     body = "#{rspotify_track.name} - #{rspotify_track.artists.map(&:name).join(' - ')}\nAdded by #{user_name}"
 
     # Link to song in playlist
-    data = ENV['democraylist_fe_host'] + "/playlists/#{track.playlist_id}?track_id=#{track.id}"
+    url = ENV['democraylist_fe_host'] + "/playlists/#{track.playlist_id}?track_id=#{track.id}"
     {
       notification: {
         icon: icon,
         badge: badge,
         title: title,
         body: body,
-        click_action: data
+        data: { url: url }
       }
     }
   end
