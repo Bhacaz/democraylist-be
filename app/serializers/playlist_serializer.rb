@@ -13,14 +13,14 @@ class PlaylistSerializer
 
   attribute :created_by do |object|
     {
-      id: object.user.id,
+      id: object.user_id,
       display_name: object.user.name,
       spotify_id: object.user.spotify_id
     }
   end
 
   attribute :subscribed do |object, params|
-    Subscription.exists?(playlist_id: object.id, user_id: params[:auth_user_id])
+    object.subscriptions.exists?(user_id: params[:auth_user_id])
   end
 
   attribute :up_vote_count do |object|
@@ -45,7 +45,7 @@ class PlaylistSerializer
 
     tracks_data = RSpotify::Track.find(tracks.map(&:spotify_id)).index_by(&:id)
     tracks.map do |track|
-      tracks_data[track.spotify_id].as_json.merge(TrackSerializer.new(track, params: params).to_hash)
+      tracks_data[track.spotify_id].as_json.merge!(TrackSerializer.new(track, params: params).to_hash)
     end
   end
 
@@ -55,7 +55,7 @@ class PlaylistSerializer
 
     tracks_data = RSpotify::Track.find(tracks.map(&:spotify_id)).index_by(&:id)
     tracks.map do |track|
-      tracks_data[track.spotify_id].as_json.merge(TrackSerializer.new(track, params: params).to_hash)
+      tracks_data[track.spotify_id].as_json.merge!(TrackSerializer.new(track, params: params).to_hash)
     end
   end
 
@@ -69,7 +69,7 @@ class PlaylistSerializer
 
     tracks_data = RSpotify::Track.find(tracks.map(&:spotify_id)).index_by(&:id)
     tracks.map do |track|
-      tracks_data[track.spotify_id].as_json.merge(TrackSerializer.new(track, params: params).to_hash)
+      tracks_data[track.spotify_id].as_json.merge!(TrackSerializer.new(track, params: params).to_hash)
     end
   end
 
