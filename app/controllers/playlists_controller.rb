@@ -95,6 +95,26 @@ class PlaylistsController < ApplicationApiController
     render json: stats
   end
 
+  def play
+    playlist = Playlist.find(params[:id])
+    case params[:queue]
+    when 'tracks'
+      RSpotify::Player.new(auth_user.rspotify_user).play_tracks(playlist.real_tracks.map(&:uri))
+    when 'submissions'
+      RSpotify::Player.new(auth_user.rspotify_user).play_tracks(playlist.submission_tracks.map(&:uri))
+    when 'unvoted'
+      ids = playlist.real_tracks.map(&:id).concat(playlist.submission_tracks.map(&:id))
+      uris = Track.includes(:votes)
+        .where(id: ids)
+        .reject { |track| track.votes.map(&:user_id).include?(auth_user.id) }
+        .sort_by { |track| ids.index(track.id) }
+        .map(&:uri)
+      RSpotify::Player.new(auth_user.rspotify_user).play_tracks(uris)
+    else
+      render json: :error, status: 404
+    end
+  end
+
   private
 
   def playlist_params

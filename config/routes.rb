@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     post '/:id/add_track', to: 'playlists#add_track'
     post '/:id/subscribed', to: 'playlists#subscribed'
     post '/:id/unsubscribed', to: 'playlists#unsubscribed'
+    post '/:id/play', to: 'playlists#play'
   end
   
   resource :tracks, default: :json do
