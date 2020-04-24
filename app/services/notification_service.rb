@@ -24,7 +24,7 @@ class NotificationService
   end
 
   def self.build_message(track)
-    badge = ENV['democraylist_fe_host'] + '/favicon.ico'
+    badge = ENV['democraylist_fe_host'] + '/assets/icons/icon-512x512-white.png'
     icon = RSpotify::Track.find(track.spotify_id).album.images[0]['url']
     user_name = track.user.name
     rspotify_track = RSpotify::Track.find(track.spotify_id)
