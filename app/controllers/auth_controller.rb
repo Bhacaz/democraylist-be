@@ -18,7 +18,7 @@ class AuthController < ApplicationApiController
   def login; end
 
   def logout
-    User.find(auth_user.id).update! access_token: nil
+    User.find(auth_user.id).update! access_token: nil, expires_at: nil
     render json: :ok
   end
 
@@ -50,11 +50,12 @@ class AuthController < ApplicationApiController
     )
 
     access_token = response['access_token']
+    expires_at = response['expires_in'] + Time.now.to_i
 
     credentials = Hashie::Mash.new(
       token: access_token,
       refresh_token: response['refresh_token'],
-      expires_at: response['expires_in'] + Time.now.to_i,
+      expires_at: expires_at,
       expires: true
     )
 
@@ -66,11 +67,11 @@ class AuthController < ApplicationApiController
     user = User.find_or_initialize_by(spotify_id: response['id'])
     user.email = response['email']
     user.name = response['display_name']
+    user.access_token = access_token
+    user.expires_at = expires_at
     user.save! if user.changed?
 
     r_user = RSpotify::User.new(**Hashie::Mash.new(response), 'credentials' => credentials)
-    user = User.find_by!(spotify_id: r_user.id)
-    user.update!(access_token: access_token)
 
     # Every time the ower of the playlist login sync own playlists
     user.playlists.each { |playlist| SyncPlaylistJob.perform_later(playlist.id) }
