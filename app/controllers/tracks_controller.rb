@@ -1,8 +1,16 @@
 class TracksController < ApplicationApiController
 
   def search
-    limit = params[:limit] || 5
-    render json: RSpotify::Track.search(params[:q], limit: limit)
+    if params[:q]
+      limit = params[:limit] || 5
+      render json: RSpotify::Track.search(params[:q], limit: limit)
+    elsif params[:track_id]
+      begin
+      render json: RSpotify::Track.find(params[:track_id])
+      rescue => e
+        render json: :error, status: 404
+      end
+    end
   end
 
   def show

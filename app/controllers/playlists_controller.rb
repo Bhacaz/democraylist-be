@@ -38,6 +38,19 @@ class PlaylistsController < ApplicationApiController
     render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
+  def accessible
+    track_id = params[:track_id]
+    if track_id
+      playlist_ids_with_track = Track.where(spotify_id: track_id).distinct.pluck(:playlist_id)
+    end
+    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
+    my_playlist_ids = Playlist.where(user_id: auth_user.id).ids
+    subscription_ids = Playlist.joins(:subscriptions).merge(Subscription.where(user_id: auth_user.id)).ids
+    playlist_ids = my_playlist_ids.concat(subscription_ids) - playlist_ids_with_track
+    query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).where(id: playlist_ids)
+    render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
+  end
+
   def subscribed
     playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
     Subscription.create! user_id: auth_user.id, playlist_id: playlist.id
