@@ -17,6 +17,15 @@ class PlaylistsController < ApplicationApiController
     render json: Playlist.where(user_id: auth_user.id)
   end
 
+  def update
+    playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
+    playlist.update!(params.require(:playlist).permit(:name, :description, :song_size))
+    auth_user.rspotify_user
+    RSpotify::Playlist.find_by_id(playlist.spotify_id).change_details!(**Hashie::Mash.new(name: playlist.name, description: playlist.description))
+
+    render json: PlaylistSerializer.new(playlist, params: { auth_user_id: auth_user.id })
+  end
+
   def add_track
     playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
     playlist.tracks.create! playlist_id: params[:id], added_by_id: auth_user.id, spotify_id: params[:track_id]

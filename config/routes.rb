@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get '/accessible', to: 'playlists#accessible'
     post '/create', to: 'playlists#create'
     get '/:id', to: 'playlists#show'
+    put '/:id', to: 'playlists#update'
     get '/:id/stats', to: 'playlists#stats'
     post '/:id/add_track', to: 'playlists#add_track'
     post '/:id/subscribed', to: 'playlists#subscribed'
