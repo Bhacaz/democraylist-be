@@ -141,6 +141,16 @@ class PlaylistsController < ApplicationApiController
     end
   end
 
+  def recommendations
+    seeds = Playlist.find(params[:id]).real_tracks.first(10).shuffle.first(5).map(&:spotify_id)
+    options = {
+      min_energy: 0.5,
+      min_danceability: 0.5,
+      max_popularity: 80
+    }
+    render json: RSpotify::Recommendations.generate(limit: 10, seed_tracks: seeds, **options).tracks
+  end
+
   private
 
   def playlist_params

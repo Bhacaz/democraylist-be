@@ -25,6 +25,10 @@ class UsersController < ApplicationController
     @playlist = spotify_user.playlists
   end
 
+  def recently_played_tracks
+    render json: auth_user.rspotify_user.recently_played(limit: 10)
+  end
+
   # POST /users
   # POST /users.json
   def create

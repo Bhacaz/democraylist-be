@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get :playlists
     post '/push_notif_preference', to: 'users#create_push_notif_preference', on: :collection
     get 'player/devices', to: 'users#devices', on: :collection
+    get 'player/recently_played_tracks', to: 'users#recently_played_tracks', on: :collection
   end
 
   resource :playlists do
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
     post '/:id/subscribed', to: 'playlists#subscribed'
     post '/:id/unsubscribed', to: 'playlists#unsubscribed'
     post '/:id/play', to: 'playlists#play'
+    get '/:id/recommendations', to: 'playlists#recommendations'
   end
   
   resource :tracks, default: :json do
