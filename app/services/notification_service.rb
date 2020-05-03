@@ -2,7 +2,7 @@ class NotificationService
   def self.broadcast_added_track(track)
     user_ids = track.playlist.subscriptions.map(&:user_id) << track.playlist.user_id
     user_ids.delete(track.added_by_id)
-    User.joins(:push_notif_preference).where(id: user_ids).each do |user|
+    User.joins(:push_notif_preference).where(id: user_ids).distinct.each do |user|
       send_push(build_message(track), user)
     end
   end
