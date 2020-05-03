@@ -1,6 +1,7 @@
 
 class SyncPlaylistJob < ApplicationJob
   queue_as :default
+  retry_on Exception, attempts: 3
 
   def perform(playlist_id)
     playlist = Playlist.includes(tracks: :votes).find(playlist_id)
