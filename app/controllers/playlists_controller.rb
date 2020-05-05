@@ -40,7 +40,7 @@ class PlaylistsController < ApplicationApiController
     # TODO add algo to fetch the most popular playlist be subcriptionsx
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
     subscription_ids = Playlist.joins(:subscriptions, :user).merge(Subscription.where(user_id: auth_user.id)).ids
-    query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).where.not(user_id: auth_user.id).where.not(id: subscription_ids).where.not(share_setting: :visible)
+    query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).where.not(user_id: auth_user.id).where.not(id: subscription_ids).where(share_setting: :visible)
     render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
