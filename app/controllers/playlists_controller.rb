@@ -22,7 +22,7 @@ class PlaylistsController < ApplicationApiController
 
   def update
     playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
-    playlist.update!(params.require(:playlist).permit(:name, :description, :song_size))
+    playlist.update!(params.require(:playlist).permit(:name, :description, :song_size, :share_setting))
     auth_user.rspotify_user
     RSpotify::Playlist.find_by_id(playlist.spotify_id).change_details!(**Hashie::Mash.new(name: playlist.name, description: playlist.description))
 
@@ -40,7 +40,7 @@ class PlaylistsController < ApplicationApiController
     # TODO add algo to fetch the most popular playlist be subcriptionsx
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
     subscription_ids = Playlist.joins(:subscriptions, :user).merge(Subscription.where(user_id: auth_user.id)).ids
-    query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).where.not(user_id: auth_user.id).where.not(id: subscription_ids)
+    query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).where.not(user_id: auth_user.id).where.not(id: subscription_ids).where.not(share_setting: :visible)
     render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
@@ -163,6 +163,19 @@ class PlaylistsController < ApplicationApiController
       max_popularity: 80
     }
     render json: RSpotify::Recommendations.generate(limit: 10, seed_tracks: seeds, **options).tracks
+  end
+
+  def shareable_link
+    playlist = Playlist.find(params[:id])
+    if playlist.share_setting != 'restricted'
+      render json: { hash: HashService.hash(playlist.id) }
+    else
+      render head: 404
+    end
+  end
+
+  def id_from_hash
+    render json: { id: HashService.un_hash(params[:hash]) }
   end
 
   private

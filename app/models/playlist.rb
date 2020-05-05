@@ -1,5 +1,6 @@
 class Playlist < ApplicationRecord
   belongs_to :user
+  enum share_setting: [:visible, :with_link, :restricted]
 
   validates :name, presence: true
   validates :user_id, presence: true

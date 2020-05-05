@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_26_015942) do
+ActiveRecord::Schema.define(version: 2020_05_04_000747) do
+
+  create_table "join_playlist_invites", force: :cascade do |t|
+    t.integer "invited_by_id"
+    t.integer "user_id"
+    t.integer "playlist_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["invited_by_id"], name: "index_join_playlist_invites_on_invited_by_id"
+    t.index ["playlist_id"], name: "index_join_playlist_invites_on_playlist_id"
+    t.index ["user_id"], name: "index_join_playlist_invites_on_user_id"
+  end
 
   create_table "playlists", force: :cascade do |t|
     t.string "spotify_id"
@@ -20,6 +31,7 @@ ActiveRecord::Schema.define(version: 2020_04_26_015942) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "song_size"
+    t.integer "share_setting", default: 0
     t.index ["user_id"], name: "index_playlists_on_user_id"
   end
 
@@ -70,5 +82,6 @@ ActiveRecord::Schema.define(version: 2020_04_26_015942) do
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
+  add_foreign_key "join_playlist_invites", "users", column: "invited_by_id"
   add_foreign_key "tracks", "users", column: "added_by_id"
 end

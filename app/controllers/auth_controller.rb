@@ -84,7 +84,7 @@ class AuthController < ApplicationApiController
   end
 
   def refresh_access_token
-    access_token = RSpotify::User.send(:refresh_token, auth_user.spotify_id)
+    access_token = RSpotify::User.send(:refresh_token, auth_user.rspotify_user.id)
     User.find_by!(spotify_id: auth_user.spotify_id).update!(access_token: access_token, expires_at: (Time.now + 1.hour).to_i)
 
     render json: { access_token: access_token }

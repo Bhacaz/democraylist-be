@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     post '/:id/unsubscribed', to: 'playlists#unsubscribed'
     post '/:id/play', to: 'playlists#play'
     get '/:id/recommendations', to: 'playlists#recommendations'
+    get '/:id/shareable_link', to: 'playlists#shareable_link'
+    get '/id_from_hash/:hash', to: 'playlists#id_from_hash'
   end
   
   resource :tracks, default: :json do
