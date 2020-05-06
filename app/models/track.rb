@@ -20,6 +20,6 @@ class Track < ApplicationRecord
   end
 
   def send_notification
-    SendNotifJob.perform_later(id)
+    PrepareNotifJob.perform_later(id)
   end
 end

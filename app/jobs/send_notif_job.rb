@@ -1,9 +1,7 @@
+class SendNotifJob < ApplicationJob
+  retry_on Exception, attempts: 3
 
-class SendNotifJob
-  include Sidekiq::Worker
-  sidekiq_options retry: false
-
-  def perform(track_id)
-    NotificationService.broadcast_added_track(Track.find(track_id))
+  def perform(notif_data, user_preference)
+    NotificationService.send_push notif_data, user_preference
   end
 end

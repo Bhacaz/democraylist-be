@@ -2,14 +2,14 @@ class NotificationService
   def self.broadcast_added_track(track)
     user_ids = track.playlist.subscriptions.map(&:user_id) << track.playlist.user_id
     user_ids.delete(track.added_by_id)
+
+    message = build_message(track)
     User.joins(:push_notif_preference).where(id: user_ids).distinct.each do |user|
-      send_push(build_message(track), user)
+      SendNotifJob.perform_later(message, user.push_notif_preference.preference)
     end
   end
 
-  def self.send_push(message, user)
-    notification_data = user.push_notif_preference.preference
-
+  def self.send_push(message, notification_data)
     Webpush.payload_send(endpoint: notification_data['endpoint'],
                          message: message.to_json,
                          p256dh: notification_data['keys']['p256dh'],
@@ -40,6 +40,7 @@ class NotificationService
         badge: badge,
         title: title,
         body: body,
+        vibrate: [200, 100, 200],
         data: { url: url }
       }
     }
