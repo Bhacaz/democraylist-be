@@ -5,7 +5,7 @@ class NotificationService
 
     message = build_message(track)
     User.joins(:push_notif_preference).where(id: user_ids).distinct.each do |user|
-      SendNotifJob.perform_later(message, user.push_notif_preference.preference)
+      SendNotifJob.perform_later(message, user_id)
     end
   end
 
