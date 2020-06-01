@@ -9,7 +9,9 @@ module RSpotify
 
         tracks_to_cache = []
         if ids_to_cache.any?
-          tracks_to_cache = super(ids_to_cache, market: market)
+          ids.each_slice(50) do |slice_ids|
+            tracks_to_cache.concat(super(slice_ids, market: market))
+          end
           tracks_to_write_multi = tracks_to_cache.each_with_object({}) { |track, hash| hash["rspotify:track:#{track.id}"] = track }
           Rails.cache.write_multi(tracks_to_write_multi, expires_in: 1.day)
         end
