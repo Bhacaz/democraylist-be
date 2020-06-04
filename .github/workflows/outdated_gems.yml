@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  outdated_gems:
+    runs-on: ubuntu-latest
+    name: Outdated gems
+    steps:
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.0'
+      - name: 'Pull outdated gem action script'
+        uses: actions/checkout@v2
+        with:
+          repository: 'Bhacaz/bundler-outdated-action'
+      - name: 'Check outdated gems'
+        run: 'ruby main.rb'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GEMFILE_REPOSITORY: ${{ github.repository	}}
