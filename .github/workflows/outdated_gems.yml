@@ -1,3 +1,5 @@
+name: 'Outdated Gems'
+
 on:
   push:
     branches:
