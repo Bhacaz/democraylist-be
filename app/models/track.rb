@@ -10,9 +10,7 @@ class Track < ApplicationRecord
   after_commit :send_notification, on: :create
 
   def vote_score
-    up = votes.to_a.count { |vote| vote.vote == 'up' }
-    down = votes.to_a.count { |vote| vote.vote == 'down' }
-    up - down
+   votes.to_a.count { |vote| vote.vote == 'up' }
   end
 
   def uri
