@@ -1,4 +1,4 @@
-class PrepareNewTrackNotifJob < ApplicationJob
+class PrepareNewFeaturesNotifJob < ApplicationJob
   queue_as :default
 
   def perform(body)
