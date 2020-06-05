@@ -26,8 +26,15 @@ class UsersController < ApplicationController
   end
 
   def recently_played_tracks
-    currently_playing = [RSpotify::Player.new(User.first.rspotify_user).currently_playing]
-    tracks = currently_playing.concat(auth_user.rspotify_user.recently_played(limit: 10))
+    currently_playing = nil
+    begin
+      currently_playing = RSpotify::Player.new(User.first.rspotify_user).currently_playing
+    rescue
+      # ignored
+    end
+    tracks = auth_user.rspotify_user.recently_played(limit: 10)
+    tracks.unshift currently_playing if currently_playing
+
     render json: tracks.uniq(&:id)
   end
 
