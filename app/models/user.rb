@@ -8,6 +8,6 @@ class User < ApplicationRecord
   has_one :push_notif_preference
 
   def rspotify_user
-    RSpotify::User.new('id' => spotify_id, 'credentials' => { 'token' => access_token })
+    RSpotify::User.new('id' => spotify_id, 'credentials' => { 'token' => access_token, 'refresh_token' => refresh_token })
   end
 end

@@ -98,6 +98,7 @@ class PlaylistsController < ApplicationApiController
       hash = {}
       hash[:user] = rspotify_user[user.spotify_id].as_json.merge(user.as_json)
       hash[:user].delete('access_token')
+      hash[:user].delete('refresh_token')
       hash[:submission_count] = playlist.tracks.count { |track| track.added_by_id == user.id }
       hash[:submission_upvote_count] = playlist.tracks.select { |track| track.added_by_id == user.id }.sum { |track| track.votes.up.size }
       hash[:submission_downvote_count] = playlist.tracks.select { |track| track.added_by_id == user.id }.sum { |track| track.votes.down.size }

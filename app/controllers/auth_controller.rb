@@ -18,7 +18,7 @@ class AuthController < ApplicationApiController
   def login; end
 
   def logout
-    User.find(auth_user.id).update! access_token: nil, expires_at: nil
+    User.find(auth_user.id).update! access_token: nil, expires_at: nil, refresh_token: nil
     render json: :ok
   end
 
@@ -68,6 +68,7 @@ class AuthController < ApplicationApiController
     user.email = response['email']
     user.name = response['display_name']
     user.access_token = access_token
+    user.refresh_token = credentials['refresh_token']
     user.expires_at = expires_at
     user.save! if user.changed?
 

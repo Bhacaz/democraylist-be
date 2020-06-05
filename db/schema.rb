@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_000747) do
+ActiveRecord::Schema.define(version: 2020_06_05_010919) do
 
   create_table "join_playlist_invites", force: :cascade do |t|
     t.integer "invited_by_id"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_000747) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "access_token"
     t.integer "expires_at"
+    t.string "refresh_token"
   end
 
   create_table "votes", force: :cascade do |t|
