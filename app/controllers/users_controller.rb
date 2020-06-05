@@ -26,7 +26,9 @@ class UsersController < ApplicationController
   end
 
   def recently_played_tracks
-    render json: auth_user.rspotify_user.recently_played(limit: 10).uniq(&:id)
+    currently_playing = [RSpotify::Player.new(User.first.rspotify_user).currently_playing]
+    tracks = currently_playing.concat(auth_user.rspotify_user.recently_played(limit: 10))
+    render json: tracks.uniq(&:id)
   end
 
   # POST /users
@@ -82,13 +84,13 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:name, :email, :spotify_id)
-    end
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:name, :email, :spotify_id)
+  end
 end
