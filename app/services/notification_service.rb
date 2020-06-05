@@ -3,8 +3,15 @@ class NotificationService
     user_ids = track.playlist.subscriptions.map(&:user_id) << track.playlist.user_id
     user_ids.delete(track.added_by_id)
 
-    message = build_message(track)
+    message = build_new_track_message(track)
     User.joins(:push_notif_preference).where(id: user_ids).distinct.each do |user|
+      SendNotifJob.perform_later(message, user.id)
+    end
+  end
+
+  def self.broadcast_new_features(body)
+    message = build_new_feature_message(body)
+    User.joins(:push_notif_preference).distinct.each do |user|
       SendNotifJob.perform_later(message, user.id)
     end
   end
@@ -23,7 +30,7 @@ class NotificationService
     )
   end
 
-  def self.build_message(track)
+  def self.build_new_track_message(track)
     badge = ENV['democraylist_fe_host'] + '/assets/icons/icon-512x512-white.png'
     icon = RSpotify::Track.find(track.spotify_id).album.images.last['url']
     user_name = track.user.name
@@ -37,6 +44,23 @@ class NotificationService
     {
       notification: {
         icon: icon,
+        badge: badge,
+        title: title,
+        body: body,
+        vibrate: [200, 100, 200],
+        data: { url: url }
+      }
+    }
+  end
+
+  def self.build_new_feature_message(body)
+    badge = ENV['democraylist_fe_host'] + '/assets/icons/icon-512x512-white.png'
+    title = "Democraylist - NEW FEATURES!"
+
+    # Link to song in playlist
+    url = ENV['democraylist_fe_host']
+    {
+      notification: {
         badge: badge,
         title: title,
         body: body,

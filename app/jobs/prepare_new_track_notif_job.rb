@@ -1,4 +1,4 @@
-class PrepareNotifJob < ApplicationJob
+class PrepareNewTrackNotifJob < ApplicationJob
   queue_as :default
 
   def perform(track_id)
