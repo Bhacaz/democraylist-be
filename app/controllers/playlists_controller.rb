@@ -82,14 +82,10 @@ class PlaylistsController < ApplicationApiController
   def stats
     playlist = Playlist.includes(tracks: [:user, { votes: :user }]).find(params[:id])
 
-    # Track sunmittes
-    # Track upvoted
-    # Tack downvoted
-    # Upvote given
-    # Downvote given
-
     implicated_users = playlist.tracks.map(&:user)
     implicated_users.concat(playlist.tracks.flat_map { |track| track.votes.map(&:user) })
+    implicated_users.concat(playlist.subscriptions.pluck(:user_id))
+    implicated_users << playlist.user_id
     implicated_users.uniq!
 
     rspotify_user = implicated_users.map { |user| RSpotify::User.find(user.spotify_id) }.index_by(&:id)
@@ -122,7 +118,6 @@ class PlaylistsController < ApplicationApiController
   end
 
   def play
-    # aac3fb10cca30d56f9c384b4199d68764e8ac928
     playlist = Playlist.find(params[:id])
     uris =
     case params[:queue]
