@@ -84,8 +84,8 @@ class PlaylistsController < ApplicationApiController
 
     implicated_users = playlist.tracks.map(&:user)
     implicated_users.concat(playlist.tracks.flat_map { |track| track.votes.map(&:user) })
-    implicated_users.concat(playlist.subscriptions.pluck(:user_id))
-    implicated_users << playlist.user_id
+    implicated_users.concat(playlist.subscriptions.map(&:user))
+    implicated_users << playlist.user
     implicated_users.uniq!
 
     rspotify_user = implicated_users.map { |user| RSpotify::User.find(user.spotify_id) }.index_by(&:id)
