@@ -80,7 +80,7 @@ class UsersController < ApplicationController
 
   def create_push_notif_preference
     params.permit!
-    pref = PushNotifPreference.find_or_initialize_by user_id: auth_user.id
+    pref = PushNotifPreference.new user_id: auth_user.id
     pref.preference = params[:preference].to_hash
     pref.save!
     render json: :ok, status: :created

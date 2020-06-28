@@ -4,14 +4,14 @@ class NotificationService
     user_ids.delete(track.added_by_id)
 
     message = build_new_track_message(track)
-    User.joins(:push_notif_preference).where(id: user_ids).distinct.each do |user|
+    User.joins(:push_notif_preferences).where(id: user_ids).distinct.each do |user|
       SendNotifJob.perform_later(message, user.id)
     end
   end
 
   def self.broadcast_new_features(body)
     message = build_new_feature_message(body)
-    User.joins(:push_notif_preference).distinct.each do |user|
+    User.joins(:push_notif_preferences).distinct.each do |user|
       SendNotifJob.perform_later(message, user.id)
     end
   end
