@@ -32,7 +32,7 @@ class PlaylistSerializer
   end
 
   attribute :subscribers do |object|
-    object.subscriptions.size
+    object.subscriptions.count
   end
 
   attribute :tracks_count do |object|
