@@ -12,9 +12,9 @@ jobs:
     steps:
       - name: Checkout gemfiles
         uses: Bhacaz/checkout-files@v1
-          with:
-            files: Gemfile Gemfile.lock .ruby-version
-            token: ${{ secrets.GH_TOKEN }}
+        with:
+          files: Gemfile Gemfile.lock .ruby-version
+          token: ${{ secrets.GH_TOKEN }}
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
       - name: 'Pull outdated gem action script'
