@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
+gem 'rails'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -54,6 +54,6 @@ gem 'rspotify'
 gem "figaro"
 gem 'rack-cors', :require => 'rack/cors'
 gem 'httparty', require: false
-gem 'bright_serializer', git: 'https://github.com/petalmd/bright_serializer'
+gem 'bright_serializer'
 gem 'sidekiq'
 gem 'webpush'
