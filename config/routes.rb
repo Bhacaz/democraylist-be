@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  root 'auth#login'
+  root to: 'home#index'
 
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+
+  resources :home, only: :index
 
   resources :users do
     get :playlists
