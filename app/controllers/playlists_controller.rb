@@ -1,6 +1,8 @@
 class PlaylistsController < ApplicationApiController
+  INDEX_EXCLUDED_ATTRIBUTES = [:tracks, :tracks_submission, :tracks_archived, :down_vote_count].freeze
+
   def index
-    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
+    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - INDEX_EXCLUDED_ATTRIBUTES
     query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).where(user_id: auth_user.id)
     render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
   end
@@ -38,14 +40,14 @@ class PlaylistsController < ApplicationApiController
 
   def explore
     # TODO add algo to fetch the most popular playlist be subcriptionsx
-    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
+    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - INDEX_EXCLUDED_ATTRIBUTES
     subscription_ids = Playlist.joins(:subscriptions, :user).merge(Subscription.where(user_id: auth_user.id)).ids
     query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).where.not(user_id: auth_user.id).where.not(id: subscription_ids).where(share_setting: :visible)
     render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
   def subscriptions
-    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
+    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - INDEX_EXCLUDED_ATTRIBUTES
     query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).joins(:subscriptions).merge(Subscription.where(user_id: auth_user.id))
     render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
   end
@@ -55,7 +57,7 @@ class PlaylistsController < ApplicationApiController
     if track_id
       playlist_ids_with_track = Track.where(spotify_id: track_id).distinct.pluck(:playlist_id)
     end
-    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
+    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - INDEX_EXCLUDED_ATTRIBUTES
     my_playlist_ids = Playlist.where(user_id: auth_user.id).ids
     subscription_ids = Playlist.joins(:subscriptions).merge(Subscription.where(user_id: auth_user.id)).ids
     playlist_ids = my_playlist_ids.concat(subscription_ids) - playlist_ids_with_track
@@ -67,7 +69,7 @@ class PlaylistsController < ApplicationApiController
     playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
     Subscription.create! user_id: auth_user.id, playlist_id: playlist.id
     RSpotify::User.find(auth_user.spotify_id).follow(RSpotify::Playlist.find_by_id(playlist.spotify_id))
-    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
+    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - INDEX_EXCLUDED_ATTRIBUTES
     render json: PlaylistSerializer.new(playlist, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
@@ -75,7 +77,7 @@ class PlaylistsController < ApplicationApiController
     playlist = Playlist.includes(:subscriptions, tracks: [:votes, :user]).find(params[:id])
     Subscription.find_by!(user_id: auth_user.id, playlist_id: playlist.id).destroy!
     RSpotify::User.find(auth_user.spotify_id).unfollow(RSpotify::Playlist.find_by_id(playlist.spotify_id))
-    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - [:tracks, :tracks_submission]
+    attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - INDEX_EXCLUDED_ATTRIBUTES
     render json: PlaylistSerializer.new(playlist, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 

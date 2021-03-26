@@ -8,7 +8,7 @@ class Playlist < ApplicationRecord
   has_many :subscriptions
 
   def preload_tracks
-    @preload_tracks ||= tracks.includes(:votes, :user)
+    @preload_tracks ||= tracks.loaded? ? tracks : tracks.includes(:votes, :user)
   end
 
   def real_tracks
