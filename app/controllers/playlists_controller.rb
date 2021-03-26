@@ -1,5 +1,5 @@
 class PlaylistsController < ApplicationApiController
-  INDEX_EXCLUDED_ATTRIBUTES = [:tracks, :tracks_submission, :tracks_archived, :down_vote_count].freeze
+  INDEX_EXCLUDED_ATTRIBUTES = [:tracks, :tracks_submission, :tracks_archived].freeze
 
   def index
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - INDEX_EXCLUDED_ATTRIBUTES

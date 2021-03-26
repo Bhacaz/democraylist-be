@@ -27,14 +27,6 @@ class PlaylistSerializer
     object.subscriptions.any? { |subscription| subscription.user_id == params[:auth_user_id] }
   end
 
-  attribute :up_vote_count do |object|
-    object.tracks.sum { |track| track.votes.count(&:up?) }
-  end
-
-  attribute :down_vote_count do |object|
-    object.tracks.sum { |track| track.votes.count(&:down?) }
-  end
-
   attribute :subscribers do |object|
     object.subscriptions.size
   end
