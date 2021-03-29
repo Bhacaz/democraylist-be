@@ -4,7 +4,11 @@ class PlaylistSerializer
   attributes *Playlist.attribute_names.map(&:to_sym)
 
   attribute :image_url do |object|
-    RSpotify::Playlist.find_by_id(object.spotify_id).images.first&.fetch('url') if object.spotify_id
+    next unless object.spotify_id
+
+    Rails.cache.fetch("playlist-image_#{object.spotify_id}", expires_in: 5.minutes) do
+      RSpotify::Playlist.find_by_id(object.spotify_id).images.first&.fetch('url')
+    end
   end
 
   attribute :uri do |object|
@@ -20,19 +24,11 @@ class PlaylistSerializer
   end
 
   attribute :subscribed do |object, params|
-    object.subscriptions.exists?(user_id: params[:auth_user_id])
-  end
-
-  attribute :up_vote_count do |object|
-    Vote.joins(track: :playlist).merge(Playlist.where(id: object.id)).where(vote: :up).size
-  end
-
-  attribute :down_vote_count do |object|
-    Vote.joins(track: :playlist).merge(Playlist.where(id: object.id)).where(vote: :down).size
+    object.subscriptions.any? { |subscription| subscription.user_id == params[:auth_user_id] }
   end
 
   attribute :subscribers do |object|
-    object.subscriptions.count
+    object.subscriptions.size
   end
 
   attribute :tracks_count do |object|
