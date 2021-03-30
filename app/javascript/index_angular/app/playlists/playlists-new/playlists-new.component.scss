@@ -1,0 +1,36 @@
+
+.form-group {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+#playlist-form {
+  width: 100%;
+}
+
+label {
+  margin-bottom: 0.8em;
+  color: #ff4e50;
+}
+
+.form-control {
+  flex: 1;
+}
+
+#submit-button {
+  margin: 1em;
+  background-color: #ff4e50;
+  color: white;
+  border: 1px #ff4e50 solid;
+
+}
+
+p-radioButton {
+  padding-bottom: 0.4em;
+}
+
+#share-setting-hint {
+  color: #ADADAD;
+  font-size: 0.9em;
+}

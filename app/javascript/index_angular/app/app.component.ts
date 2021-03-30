@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import templateString from './app.component.html'
 
 @Component({
-  selector: 'index-angular',
-  template: `<h1>Hello {{name}}</h1>`
+  selector: 'app-root',
+  template: templateString,
+  // styles: ['./app.component.scss']
 })
 export class AppComponent {
-  name = 'Angular!';
+  title = 'Democraylist';
 }

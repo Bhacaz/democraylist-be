@@ -1,0 +1,32 @@
+<app-back-toolbar [redirectPath]="'/playlists/' + playlistId"></app-back-toolbar>
+<div id="stats-table">
+<span *ngIf="!stats">
+  <app-loading></app-loading>
+</span>
+
+  <p-table *ngIf="stats" [value]="stats">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 30%">User</th>
+        <th>Track submit</th>
+        <th>Received <i class="fa fa-arrow-up"></i></th>
+        <th>Received <i class="fa fa-arrow-down"></i></th>
+        <th>Vote <i class="fa fa-arrow-up"></i></th>
+        <th>Vote <i class="fa fa-arrow-down"></i></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-stat>
+      <tr>
+        <td class="user-cell content-center">
+          <img *ngIf="stat.user.images" class="stats-user-image round-image content-center-content" src="{{stat.user.images[0].url}}" height="30px">
+          <span class="content-center-content">{{stat.user.display_name}}</span>
+        </td>
+        <td>{{stat.submission_count}}</td>
+        <td>{{stat.submission_upvote_count}} ({{(stat.submission_upvote_count/stat.submission_count).toFixed(2)}})</td>
+        <td>{{stat.submission_downvote_count}} ({{(stat.submission_downvote_count/stat.submission_count).toFixed(2)}})</td>
+        <td>{{stat.upvote_count}}</td>
+        <td>{{stat.downvote_count}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

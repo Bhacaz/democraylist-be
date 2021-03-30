@@ -1,0 +1,16 @@
+<div class="track-finder container content-center">
+  <input type="text"
+         id="search-input"
+         pInputText
+         class="form-control"
+         [(ngModel)]="query"
+         name="query"
+         placeholder="Search"
+         (ngModelChange)='queryChanged.next($event)'>
+
+  <div *ngIf="searchResult">
+    <div *ngFor="let track of searchResult">
+      <app-track-summary [track]="track" [playlist]="playlist"></app-track-summary>
+    </div>
+  </div>
+</div>

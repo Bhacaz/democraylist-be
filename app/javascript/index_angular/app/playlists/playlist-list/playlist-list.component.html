@@ -1,0 +1,7 @@
+<!--<a routerLink="/playlists/new">-->
+<!--  <h2>Create a playlist</h2>-->
+<!--</a>-->
+
+<div *ngFor="let playlist of playlists">
+  <app-playlist-summary [playlist]="playlist"></app-playlist-summary>
+</div>

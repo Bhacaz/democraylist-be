@@ -1,0 +1,69 @@
+
+.playlist-header {
+  padding: 0.1em 0.5em;
+  margin: 0 -1em;
+  //border: 1px solid;
+  //border-radius: 10px;
+  //background-image: url('/assets/images/Été 2020.png')
+  //background: linear-gradient(128deg, rgba(0,177,175,0.8) 0%, rgba(249,212,35,0.8) 100%);
+
+}
+
+.playlist-img {
+  box-shadow: -9px 9px 20px -10px black;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.playlist-info {
+  padding-left: 0.5em;
+}
+
+.up-vote-arrow {
+  color: #00B1AF;
+  font-size: 0.8em;
+}
+
+.subscribed-button {
+  margin-left: 1em;
+}
+
+.dot-menu {
+  margin-left: 0.5em;
+}
+
+.menu-show-button {
+  width: 1em;
+  padding-right: 0.2em;
+  padding-left: 0.4em;
+}
+
+.playlist-name {
+  color: #ff4e50;
+  font-size: 1em;
+  padding-bottom: 0.2em;
+}
+
+.playlist-description {
+  font-size: 0.8em;
+  color: #797979;
+}
+
+.playlist-data {
+  font-size: 0.8em;
+  color: #ADADAD;
+  text-align: right;
+  max-width: 5em;
+}
+
+.playlist-summary {
+  padding: 0.1em 0.5em;
+  margin: 0 -1em;
+  //border: 1px solid;
+  //border-radius: 10px;
+  //background-image: url('/assets/images/Été 2020.png')
+  //background: linear-gradient(128deg, rgba(0,177,175,0.8) 0%, rgba(249,212,35,0.8) 100%);
+
+}

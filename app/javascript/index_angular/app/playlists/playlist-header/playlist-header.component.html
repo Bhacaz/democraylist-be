@@ -1,0 +1,14 @@
+<div id="header-background">
+  <div id="playlist-header-container" class="container">
+    <div>
+      <img class="playlist-img" [src]="playlist?.image_url || './assets/images/playlistPlaceholder.png'" height="80px" width="80px">
+    </div>
+    <div *ngIf="playlist" class="container column playlist-info spacer">
+      <p id="playlist-name" class="content-center-content">{{playlist.name}}</p>
+      <p class="no-margin playlist-description">{{playlist.description}}</p>
+      <p class="no-margin playlist-creator">
+        {{playlist.created_by.display_name || playlist.created_by.spotify_id}} · {{playlist.tracks_count}} · {{playlist.tracks_submission_count}}
+        <br>
+    </div>
+  </div>
+</div>

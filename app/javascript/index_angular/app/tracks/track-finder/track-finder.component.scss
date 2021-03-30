@@ -1,0 +1,21 @@
+
+.track-finder {
+  margin-top: 0.5em;
+  flex-direction: column;
+  margin-right: -1em;
+  margin-left: -1em;
+}
+
+#search-input {
+  height: 2.7em;
+  margin-left: 2em;
+  margin-right: 2em;
+  border-radius: 0.5em;
+  padding-left: 1em;
+  box-shadow: -1px 4px 10px -5px black;
+}
+
+#search-input::placeholder {
+  color: #ADADAD;
+  font-size: 0.8em;
+}
