@@ -32,7 +32,6 @@ default: &default
     - .ttf
     - .woff
     - .woff2
-    - .html
 
   extensions:
     - .tsx
@@ -50,6 +49,7 @@ default: &default
     - .gif
     - .jpeg
     - .jpg
+    - .html
 
 development:
   <<: *default

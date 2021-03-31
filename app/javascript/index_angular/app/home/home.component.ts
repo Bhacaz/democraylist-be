@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DemocraylistService} from '../democraylist/democraylist.service';
-import {SwPush} from '@angular/service-worker';
+// import {SwPush} from '@angular/service-worker';
 import {environment} from '../../environment';
 import {LocalstorageService} from '../common/localstorage.service';
 
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private democraticPlaylist: DemocraylistService,
     private localstorageService: LocalstorageService,
-    private swPush: SwPush
+    // private swPush: SwPush
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
         .subscribe(data => {
           this.isLoading = false;
           this.user = data.user;
-          this.askForNotificationPermission();
+          // this.askForNotificationPermission();
           }, error => this.redirectToLogin());
     } else {
       this.route.queryParams.subscribe(params => {
@@ -55,16 +55,16 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  askForNotificationPermission() {
-    const isEnabled = this.swPush.isEnabled;
-    const isGranted = Notification.permission === 'granted';
-
-    if (!isGranted && isEnabled) {
-      this.swPush.requestSubscription({
-        serverPublicKey: environment.vapidPublicKey
-      })
-        .then(sub => this.democraticPlaylist.addPushSubscriber(sub).subscribe())
-        .catch(err => console.error('Could not subscribe to notifications', err));
-    }
-  }
+  // askForNotificationPermission() {
+  //   const isEnabled = this.swPush.isEnabled;
+  //   const isGranted = Notification.permission === 'granted';
+  //
+  //   if (!isGranted && isEnabled) {
+  //     this.swPush.requestSubscription({
+  //       serverPublicKey: environment.vapidPublicKey
+  //     })
+  //       .then(sub => this.democraticPlaylist.addPushSubscriber(sub).subscribe())
+  //       .catch(err => console.error('Could not subscribe to notifications', err));
+  //   }
+  // }
 }
