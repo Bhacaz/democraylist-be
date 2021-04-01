@@ -1,7 +1,7 @@
 <div id="header-background">
   <div id="playlist-header-container" class="container">
     <div>
-      <img class="playlist-img" [src]="playlist?.image_url || './assets/images/playlistPlaceholder.png'" height="80px" width="80px">
+      <img class="playlist-img" [src]="playlist?.image_url || './images/playlistPlaceholder.png'" height="80px" width="80px">
     </div>
     <div *ngIf="playlist" class="container column playlist-info spacer">
       <p id="playlist-name" class="content-center-content">{{playlist.name}}</p>
