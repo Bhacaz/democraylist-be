@@ -4,10 +4,11 @@ import {DemocraylistService} from '../democraylist/democraylist.service';
 // import {SwPush} from '@angular/service-worker';
 import {environment} from '../../environment';
 import {LocalstorageService} from '../common/localstorage.service';
+import templateString from './home.component.html'
 
 @Component({
   selector: 'app-home',
-  template: './home.component.html',
+  template: templateString,
   // styles: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {

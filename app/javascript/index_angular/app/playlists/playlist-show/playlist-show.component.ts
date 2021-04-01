@@ -6,12 +6,13 @@ import {MenuItem, MessageService} from 'primeng/api';
 import {copyToClipboard} from '../../common/copy-to-clipboard';
 import {environment} from '../../../environment';
 import {BottomSheetComponent} from '../../common/bottom-sheet/bottom-sheet.component';
+import templateString from './playlist-show.component.html'
 
 declare var navigator;
 
 @Component({
   selector: 'app-playlist-show',
-  template: './playlist-show.component.html',
+  template: templateString,
   // styles: ['./playlist-show.component.scss'],
   providers: [MessageService]
 })

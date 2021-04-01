@@ -2,10 +2,11 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {DemocraylistService} from '../../democraylist/democraylist.service';
 import {Subject, Subscription} from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import templateString from './track-finder.component.html'
 
 @Component({
   selector: 'app-track-finder',
-  template: './track-finder.component.html',
+  template: templateString,
   // styles: ['./track-finder.component.scss']
 })
 export class TrackFinderComponent implements OnInit, OnDestroy {

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DemocraylistService} from '../../democraylist/democraylist.service';
-
+import templateString from './playlist-shared-startpoint.component.html'
 @Component({
   selector: 'app-playlist-shared-startpoint',
-  template: './playlist-shared-startpoint.component.html',
+  template: templateString,
   // styles: ['./playlist-shared-startpoint.component.scss']
 })
 export class PlaylistSharedStartpointComponent implements OnInit {

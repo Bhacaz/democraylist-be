@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DemocraylistService} from '../../democraylist/democraylist.service';
+import templateString from './shared.component.html'
 
 @Component({
   selector: 'app-shared',
-  template: './shared.component.html',
+  template: templateString,
   // styles: ['./shared.component.scss']
 })
 export class SharedComponent implements OnInit {

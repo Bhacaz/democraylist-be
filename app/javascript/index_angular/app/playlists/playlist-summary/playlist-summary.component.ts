@@ -2,10 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DemocraylistService} from '../../democraylist/democraylist.service';
 import {MenuItem} from 'primeng/api';
+import templateString from './playlist-summary.component.html'
 
 @Component({
   selector: 'app-playlist-summary',
-  template: './playlist-summary.component.html',
+  template: templateString,
   // styles: ['./playlist-summary.component.scss']
 })
 export class PlaylistSummaryComponent implements OnInit {

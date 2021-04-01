@@ -5,10 +5,11 @@ import {AudioService} from '../audio-player.service';
 import {MenuItem} from 'primeng/api';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import templateString from './track-summary.component.html'
 
 @Component({
   selector: 'app-track-summary',
-  template: './track-summary.component.html',
+  template: templateString,
   // styles: ['./track-summary.component.scss']
 })
 export class TrackSummaryComponent implements OnInit, OnDestroy, OnChanges {

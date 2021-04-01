@@ -5,10 +5,11 @@ import {
   AfterContentInit
 } from '@angular/core';
 import {TabComponent} from '../tab/tab.component';
+import templateString from './tabs.component.html';
 
 @Component({
   selector: 'app-tabs',
-  template: './tabs.component.html',
+  template: templateString,
   // styles: ['./tabs.component.scss']
 })
 export class TabsComponent implements AfterContentInit {

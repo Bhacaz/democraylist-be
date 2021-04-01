@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
+import templateString from './tab.component.html'
 
 @Component({
   selector: 'app-tab',
-  template: './tab.component.html',
+  template: templateString,
   // styles: ['./tab.component.scss']
 })
 export class TabComponent {
