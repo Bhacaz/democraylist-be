@@ -26,7 +26,7 @@ export class SpotifyAuthService {
       '?response_type=code' +
       '&client_id=' + 'cb8636ffad174a70a3358d9e5dec6c86' +
       '&scope=' + encodeURIComponent('user-read-email playlist-read-private playlist-read-collaborative user-library-read user-library-modify') +
-      '&redirect_uri=' + encodeURIComponent('http://localhost:4200/auth/sporify/callback')
+      '&redirect_uri=' + encodeURIComponent('http://localhost:3000/auth/sporify/callback')
     );
   }
 }

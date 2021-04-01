@@ -3,10 +3,11 @@ import {MenuItem} from 'primeng/api';
 import {DemocraylistService} from '../democraylist/democraylist.service';
 import {Router} from '@angular/router';
 import {LocalstorageService} from '../common/localstorage.service';
+import templateString from './toolbar.component.html'
 
 @Component({
   selector: 'app-toolbar',
-  template: './toolbar.component.html',
+  template: templateString,
   // styles: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit, OnDestroy {

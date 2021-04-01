@@ -4,16 +4,16 @@ class AuthController < ApplicationApiController
 
   skip_before_action :authenticate_request, except: [:user, :refresh_access_token]
 
-  def spotify
-    @spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
-    session[:spotify_user] = @spotify_user.to_hash
-
-    user = User.find_or_initialize_by(email: @spotify_user.email)
-    user.spotify_id = @spotify_user.id
-    user.name = @spotify_user.display_name
-    user.save!
-    redirect_to user_url(user)
-  end
+  # def spotify
+  #   @spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
+  #   session[:spotify_user] = @spotify_user.to_hash
+  #
+  #   user = User.find_or_initialize_by(email: @spotify_user.email)
+  #   user.spotify_id = @spotify_user.id
+  #   user.name = @spotify_user.display_name
+  #   user.save!
+  #   redirect_to user_url(user)
+  # end
 
   def login; end
 

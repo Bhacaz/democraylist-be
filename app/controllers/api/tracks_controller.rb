@@ -1,3 +1,4 @@
+module Api
 class TracksController < ApplicationApiController
 
   def search
@@ -34,4 +35,5 @@ class TracksController < ApplicationApiController
   def delete
     Track.find(params[:id]).destroy!
   end
+end
 end

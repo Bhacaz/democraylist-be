@@ -1,3 +1,4 @@
+module Api
 class PlaylistsController < ApplicationApiController
   INDEX_EXCLUDED_ATTRIBUTES = [:tracks, :tracks_submission, :tracks_archived].freeze
 
@@ -181,4 +182,5 @@ class PlaylistsController < ApplicationApiController
   def playlist_params
     params.require(:playlist).permit(:user_id, :name, :description, :song_size)
   end
+end
 end

@@ -58,3 +58,4 @@ gem 'httparty', require: false
 gem 'bright_serializer'
 gem 'sidekiq'
 gem 'webpush'
+gem 'hashie'

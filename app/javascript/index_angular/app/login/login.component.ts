@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {DemocraylistService} from '../democraylist/democraylist.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LocalstorageService} from '../common/localstorage.service';
+import templateString from './login.component.html'
 
 @Component({
   selector: 'app-login',
-  template: './login.component.html',
+  template: templateString,
   // styles: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
