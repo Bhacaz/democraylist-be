@@ -5,11 +5,12 @@ import {DemocraylistService} from '../democraylist/democraylist.service';
 import {environment} from '../../environment';
 import {LocalstorageService} from '../common/localstorage.service';
 import templateString from './home.component.html'
+import styleString from './home.component.scss'
 
 @Component({
   selector: 'app-home',
   template: templateString,
-  // styles: ['./home.component.scss']
+  styles: [styleString]
 })
 export class HomeComponent implements OnInit {
 
