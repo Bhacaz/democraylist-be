@@ -6,11 +6,12 @@ import {
 } from '@angular/core';
 import {TabComponent} from '../tab/tab.component';
 import templateString from './tabs.component.html';
+import stylesString from './tabs.component.scss';
 
 @Component({
   selector: 'app-tabs',
   template: templateString,
-  // styles: ['./tabs.component.scss']
+  styles: [stylesString],
 })
 export class TabsComponent implements AfterContentInit {
 

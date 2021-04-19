@@ -2,11 +2,12 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DemocraylistService} from '../../democraylist/democraylist.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import templateString from './playslit-add-track.component.html'
+import stylesString from './playslit-add-track.component.scss'
 
 @Component({
   selector: 'app-playslit-add-track',
   template: templateString,
-  // styles: ['./playslit-add-track.component.scss']
+  styles: [stylesString],
 })
 export class PlayslitAddTrackComponent implements OnInit {
 

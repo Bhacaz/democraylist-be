@@ -1,10 +1,11 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import templateString from  './back-toolbar.component.html'
+import stylesStyles from './back-toolbar.component.scss'
 
 @Component({
   selector: 'app-back-toolbar',
   template: templateString,
-  // styles: ['./back-toolbar.component.scss']
+  styles: [stylesStyles]
 })
 export class BackToolbarComponent implements OnInit, OnChanges {
 

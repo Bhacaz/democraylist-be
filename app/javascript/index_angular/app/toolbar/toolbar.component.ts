@@ -4,12 +4,12 @@ import {DemocraylistService} from '../democraylist/democraylist.service';
 import {Router} from '@angular/router';
 import {LocalstorageService} from '../common/localstorage.service';
 import templateString from './toolbar.component.html'
-import styleString from './toolbar.component.scss'
+import stylesString from './toolbar.component.scss'
 
 @Component({
   selector: 'app-toolbar',
   template: templateString,
-  styles: [styleString]
+  styles: [stylesString]
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
 

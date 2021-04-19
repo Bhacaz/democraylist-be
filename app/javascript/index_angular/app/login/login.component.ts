@@ -3,12 +3,12 @@ import {DemocraylistService} from '../democraylist/democraylist.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LocalstorageService} from '../common/localstorage.service';
 import templateString from './login.component.html'
-import styleString from './login.component.scss'
+import stylesString from './login.component.scss'
 
 @Component({
   selector: 'app-login',
   template: templateString,
-  styles: [styleString]
+  styles: [stylesString]
 })
 export class LoginComponent implements OnInit {
 

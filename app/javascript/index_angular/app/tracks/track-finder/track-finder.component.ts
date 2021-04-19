@@ -3,11 +3,12 @@ import {DemocraylistService} from '../../democraylist/democraylist.service';
 import {Subject, Subscription} from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import templateString from './track-finder.component.html'
+import stylesString from './track-finder.component.scss'
 
 @Component({
   selector: 'app-track-finder',
   template: templateString,
-  // styles: ['./track-finder.component.scss']
+  styles: [stylesString],
 })
 export class TrackFinderComponent implements OnInit, OnDestroy {
 

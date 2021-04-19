@@ -2,11 +2,12 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DemocraylistService} from '../../../democraylist/democraylist.service';
 import {Router} from '@angular/router';
 import templateString from './playlist.component.html'
+import stylesString from './playlist.component.scss'
 
 @Component({
   selector: 'app-playlist',
   template: templateString,
-  // styles: ['./playlist.component.scss']
+  styles: [stylesString],
 })
 export class PlaylistComponent implements OnInit {
 

@@ -2,11 +2,12 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} fr
 import {SlideUpToggleAnimation} from './utility/bottom-sheet.animation';
 import {MenuItem} from 'primeng/api';
 import templateString from './bottom-sheet.component.html';
+import stylesString from './bottom-sheet.component.scss';
 
 @Component({
   selector: 'app-bottom-sheet',
   template: templateString,
-  // styles: ['./bottom-sheet.component.scss'],
+  styles: [stylesString],
   animations: [SlideUpToggleAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

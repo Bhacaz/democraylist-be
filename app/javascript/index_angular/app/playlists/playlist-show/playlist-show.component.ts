@@ -7,13 +7,14 @@ import {copyToClipboard} from '../../common/copy-to-clipboard';
 import {environment} from '../../../environment';
 import {BottomSheetComponent} from '../../common/bottom-sheet/bottom-sheet.component';
 import templateString from './playlist-show.component.html'
+import stylesString from './playlist-show.component.scss'
 
 declare var navigator;
 
 @Component({
   selector: 'app-playlist-show',
   template: templateString,
-  // styles: ['./playlist-show.component.scss'],
+  styles: [stylesString],
   providers: [MessageService]
 })
 export class PlaylistShowComponent implements OnInit, OnDestroy {

@@ -6,11 +6,12 @@ import {MenuItem} from 'primeng/api';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import templateString from './track-summary.component.html'
+import stylesString from './track-summary.component.scss'
 
 @Component({
   selector: 'app-track-summary',
   template: templateString,
-  // styles: ['./track-summary.component.scss']
+  styles: [stylesString],
 })
 export class TrackSummaryComponent implements OnInit, OnDestroy, OnChanges {
 

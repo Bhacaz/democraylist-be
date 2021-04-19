@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {DemocraylistService} from '../democraylist/democraylist.service';
 import templateString from './explore.component.html'
+import stylesString from './explore.component.scss'
 
 @Component({
   selector: 'app-explore',
   template: templateString,
-  // styles: ['./explore.component.scss']
+  styles: [stylesString],
 })
 export class ExploreComponent implements OnInit {
 
