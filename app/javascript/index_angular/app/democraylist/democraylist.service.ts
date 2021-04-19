@@ -103,41 +103,41 @@ export class DemocraylistService {
 
   searchTracks(query: string): Observable<any> {
     const params = new HttpParams().set('q', query);
-    return this.http.get('tracks/search', {params});
+    return this.http.get('api/tracks/search', {params});
   }
 
   searchByTrackId(trackId: string): Observable<any> {
     const params = new HttpParams().set('track_id', trackId);
-    return this.http.get('tracks/search', {params});
+    return this.http.get('api/tracks/search', {params});
   }
 
   addTrackToPlaylist(playlistId: number, trackId: string) {
-    return this.http.post('playlists/' + playlistId + '/add_track', { track_id: trackId });
+    return this.http.post('api/playlists/' + playlistId + '/add_track', { track_id: trackId });
   }
 
   removeTrackToPlaylist(trackId: string) {
-    return this.http.delete('tracks/' + trackId);
+    return this.http.delete('api/tracks/' + trackId);
   }
 
   upVotePatch(trackId: number): Observable<any> {
-    return this.http.patch('tracks/' + trackId + '/up_vote', {});
+    return this.http.patch('api/tracks/' + trackId + '/up_vote', {});
   }
 
   downVotePatch(trackId: number): Observable<any> {
-    return this.http.patch('tracks/' + trackId + '/down_vote', {});
+    return this.http.patch('api/tracks/' + trackId + '/down_vote', {});
   }
 
   // PLAYER
 
   playQueue(playlistId: number, queue: string): Observable<any> {
-    return this.http.post('playlists/' + playlistId + '/play', {queue});
+    return this.http.post('api/playlists/' + playlistId + '/play', {queue});
   }
 
   getUserPlayerDevices(): Observable<any> {
-    return this.http.get('users/player/devices');
+    return this.http.get('api/users/player/devices');
   }
 
   getRecentlyPlayedTracks(): Observable<any> {
-    return this.http.get('users/player/recently_played_tracks');
+    return this.http.get('api/users/player/recently_played_tracks');
   }
 }

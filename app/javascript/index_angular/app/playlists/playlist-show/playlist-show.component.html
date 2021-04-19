@@ -9,7 +9,7 @@
   <app-playlist-header [playlist]="playlist"></app-playlist-header>
 </div>
 
-<div id="sub-header-container">
+<div *ngIf="playlist" id="sub-header-container">
   <div class="header-button-container">
     <button pButton
             *ngIf="!owner && playlist.subscribed"

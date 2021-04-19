@@ -49,7 +49,6 @@ export class PlaylistShowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
-    this.owner = this.playlist.user_id === JSON.parse(localStorage.getItem('user')).id;
   }
 
   ngOnDestroy() {
@@ -59,7 +58,10 @@ export class PlaylistShowComponent implements OnInit, OnDestroy {
 
   getPlaylist() {
     this.democraylistService.getPlaylist(this.playlistId)
-      .subscribe(data => this.playlist = data);
+      .subscribe(data =>  {
+        this.playlist = data
+        this.owner = this.playlist.user_id === JSON.parse(localStorage.getItem('user')).id;
+      });
   }
 
   playTracks = (event) => {
