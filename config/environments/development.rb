@@ -56,4 +56,5 @@ Rails.application.configure do
 
   ActiveRecordQueryTrace.enabled = false
   ActiveRecordQueryTrace.lines = 10
+  Rack::MiniProfiler.config.position = 'bottom-right'
 end
