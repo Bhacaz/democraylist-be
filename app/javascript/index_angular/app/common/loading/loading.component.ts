@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import templateString from './loading.component.html'
+import styleString from './loading.component.scss'
 @Component({
   selector: 'app-loading',
   template: templateString,
-  // styles: ['./loading.component.scss']
+  styles: [styleString]
 })
 export class LoadingComponent implements OnInit {
 
