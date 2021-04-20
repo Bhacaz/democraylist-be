@@ -48,8 +48,6 @@ Rails.application.routes.draw do
   post '/auth/spotify_get_token', to: 'auth#spotify_get_token'
   post '/auth/logout', to: 'auth#logout'
 
-
-  # get '/login', to: 'auth#login'
-
-
+  # Handle every other routes to home#index / Angular router
+  get '*path', to: 'home#index'
 end
