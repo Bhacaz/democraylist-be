@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DemocraylistService} from '../democraylist/democraylist.service';
-// import {SwPush} from '@angular/service-worker';
 import {environment} from '../../environment';
 import {LocalstorageService} from '../common/localstorage.service';
 import templateString from './home.component.html'
@@ -23,7 +22,6 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private democraticPlaylist: DemocraylistService,
     private localstorageService: LocalstorageService,
-    // private swPush: SwPush
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +30,7 @@ export class HomeComponent implements OnInit {
         .subscribe(data => {
           this.isLoading = false;
           this.user = data.user;
-          // this.askForNotificationPermission();
+          this.askForNotificationPermission();
           }, error => this.redirectToLogin());
     } else {
       this.route.queryParams.subscribe(params => {
@@ -57,16 +55,18 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  // askForNotificationPermission() {
-  //   const isEnabled = this.swPush.isEnabled;
-  //   const isGranted = Notification.permission === 'granted';
-  //
-  //   if (!isGranted && isEnabled) {
-  //     this.swPush.requestSubscription({
-  //       serverPublicKey: environment.vapidPublicKey
-  //     })
-  //       .then(sub => this.democraticPlaylist.addPushSubscriber(sub).subscribe())
-  //       .catch(err => console.error('Could not subscribe to notifications', err));
-  //   }
-  // }
+  askForNotificationPermission() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: 'BEWrjXKrN7b4hUiqIV-cLYJvUjTI_ntQXV3kz7ZIWgBnbzSl-jvG8hzamjK71cKsBaSrF0pwwdl6TOEH9Lguk4Q'})
+            .then(subscription => {
+              console.log('endpoint:', subscription.toJSON());
+              if (Notification.permission === 'granted') {
+                this.democraticPlaylist.addPushSubscriber(subscription.toJSON()).subscribe()
+              }
+            });
+        }).catch(error => console.log(error));
+    }
+  }
 }

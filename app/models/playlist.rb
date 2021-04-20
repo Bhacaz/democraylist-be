@@ -4,8 +4,8 @@ class Playlist < ApplicationRecord
 
   validates :name, presence: true
   validates :user_id, presence: true
-  has_many :tracks
-  has_many :subscriptions
+  has_many :tracks, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   def preload_tracks
     @preload_tracks ||= tracks.loaded? ? tracks : tracks.includes(:votes, :user)
