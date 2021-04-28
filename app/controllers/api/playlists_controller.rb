@@ -49,7 +49,7 @@ class PlaylistsController < ApplicationApiController
 
   def subscriptions
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - INDEX_EXCLUDED_ATTRIBUTES
-    query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).joins(:subscriptions, :tracks).merge(Subscription.where(user_id: auth_user.id)).order(created_at: :desc)
+    query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).joins(:subscriptions).merge(Subscription.where(user_id: auth_user.id)).order(created_at: :desc)
     render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
@@ -62,7 +62,7 @@ class PlaylistsController < ApplicationApiController
     my_playlist_ids = Playlist.where(user_id: auth_user.id).ids
     subscription_ids = Playlist.joins(:subscriptions).merge(Subscription.where(user_id: auth_user.id)).ids
     playlist_ids = my_playlist_ids.concat(subscription_ids) - playlist_ids_with_track
-    query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).joins(:tracks).where(id: playlist_ids).order(created_at: :desc)
+    query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).where(id: playlist_ids).order(created_at: :desc)
     render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })
   end
 
