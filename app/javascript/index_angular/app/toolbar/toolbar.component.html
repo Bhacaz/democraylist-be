@@ -1,0 +1,18 @@
+
+
+<div id="toolbar" class="container flex-end">
+  <div class="home-title content-center" style="flex: 1">
+    <a routerLink="/"  class="content-center-content container">
+      <img id="toolbar-logo" class="content-center-content" src="/icons/icon-512x512-white.png" height="32px">
+      <h3 class="content-center-content toolbar-title">Democraylist</h3>
+    </a>
+  </div>
+  <div *ngIf="user" class="user-image content-center" >
+    <img class="round-image content-center-content"
+         src="{{user.images[0].url}}"
+         height="35px"
+         (click)="sheetComponent.toggle()">
+    <app-bottom-sheet #sheetComponent [title]="user.name" [menuItems]="menuItems"></app-bottom-sheet>
+
+  </div>
+</div>

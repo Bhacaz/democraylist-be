@@ -1,0 +1,44 @@
+
+.container {
+  align-items: stretch;
+  justify-content: space-around;
+}
+
+app-tabs {
+  width: 100%;
+}
+.track-list {
+  width: 100%;
+}
+
+.tracks-tabs {
+  margin-left: -1em;
+  margin-right: -1em;
+  padding-top: 1em;
+}
+
+.header-button-container {
+  text-align: right;
+  margin-top: -1.3em;
+}
+
+.header-button {
+  border-radius: 50%;
+  height: 2.7em !important;
+  width: 2.7em !important;
+  background: linear-gradient(128deg, #00B1AF 0%, rgba(249,212,35,1) 100%);
+  border: 0 !important;
+  margin-left: 1em;
+}
+
+#sub-header-container {
+  min-height: 2.4em;
+}
+
+.dot-menu {
+  font-size: 1.4em;
+  width: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+}

@@ -259,6 +259,7 @@ DEPENDENCIES
   bright_serializer
   byebug
   figaro
+  hashie
   httparty
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)

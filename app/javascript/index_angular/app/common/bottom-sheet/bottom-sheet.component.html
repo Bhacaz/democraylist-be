@@ -1,0 +1,11 @@
+<span *ngIf="flags.isBottomSheetEnabled">
+  <div class="bottom-sheet-bg-overlay" *ngIf="flags.isBottomSheetEnabled" (click)="close()"></div>
+  <div class="bottom-sheet-container" *ngIf="flags.isBottomSheetEnabled" [@slideUpToggle]>
+  <div class="bottom-sheet-header">
+      <h4 class="title">{{title}}</h4>
+    </div>
+    <div class="bottom-sheet-content">
+      <p-menu (click)="close()" [model]="menuItems" appendTo="body"></p-menu>
+    </div>
+  </div>
+</span>

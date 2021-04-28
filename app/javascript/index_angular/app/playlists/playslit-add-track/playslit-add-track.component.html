@@ -1,0 +1,24 @@
+<app-back-toolbar [redirectPath]="'/playlists/' + playlist?.id"></app-back-toolbar>
+<app-playlist-header [playlist]="playlist"></app-playlist-header>
+<div id="track-finder-header" class="content-center-content">
+  <app-track-finder *ngIf="playlist && showTrackFinder" [playlist]="playlist"></app-track-finder>
+</div>
+
+<div class="tracks-tabs">
+  <app-tabs class="content-center-content">
+    <app-tab [tabTitle]="'History'">
+      <div class="track-list">
+        <div *ngFor="let track of recentlyPlayedTracks">
+          <app-track-summary [track]="track" [playlist]="playlist"></app-track-summary>
+        </div>
+      </div>
+    </app-tab>
+    <app-tab [tabTitle]="'Recommendations'">
+      <div class="track-list">
+        <div *ngFor="let track of recommendations">
+          <app-track-summary [track]="track" [playlist]="playlist"></app-track-summary>
+        </div>
+      </div>
+    </app-tab>
+  </app-tabs>
+</div>

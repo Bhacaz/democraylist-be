@@ -1,0 +1,30 @@
+
+<app-back-toolbar [redirectPath]="playlistId ? '/playlists/' + playlistId : '/'"></app-back-toolbar>
+<div class="container">
+  <form id="playlist-form" (ngSubmit)="onSubmit()" #playlistForm="ngForm">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input pInputText type="text" class="form-control" id="name" required [(ngModel)]="playlist.name" name="name">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input pInputText type="text" class="form-control" id="description" [(ngModel)]="playlist.description" name="description">
+    </div>
+
+    <div class="form-group">
+      <label for="song_size">Playlist size</label>
+      <input pInputText type="number" class="form-control" id="song_size" [(ngModel)]="playlist.song_size" name="song_size">
+    </div>
+
+    <div class="form-group">
+      <label for="share_setting">Share setting</label>
+      <p-radioButton name="share_setting" value="visible" label="Public" [(ngModel)]="playlist.share_setting"></p-radioButton>
+      <p-radioButton name="share_setting" value="with_link" label="With link" [(ngModel)]="playlist.share_setting"></p-radioButton>
+<!--      <p-radioButton name="share_setting" value="restricted" label="Restricted" [(ngModel)]="playlist.share_setting"></p-radioButton>-->
+      <p id="share-setting-hint">{{shareSettingHint()}}</p>
+    </div>
+
+    <button pButton type="submit" id="submit-button" class="btn btn-success" [disabled]="!playlistForm.form.valid" label="Submit"></button>
+  </form>
+</div>

@@ -1,0 +1,119 @@
+
+.track-summary {
+  height: 72px;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  width: 100%;
+}
+
+.focus-background {
+  background-color: lightgoldenrodyellow
+}
+
+.arrows {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}
+
+.vote-count {
+  text-align: center;
+  width: 24px;
+}
+
+.vote-null {
+  color: lightgrey;
+}
+
+.voted-up {
+  color: #00B1AF;
+}
+
+.voted-down {
+  color: #FF4E50;
+}
+
+span.icon {
+  font-size: 1.5em;
+}
+
+.arrow-hover:hover {
+  color: grey;
+}
+
+.play-button {
+  color: whitesmoke;
+  position: absolute;
+  font-size: 3em;
+  //Center for image 72px x 72px
+  margin: 12px 15.425px;
+  z-index: 2;
+}
+
+.album-img {
+  position: absolute;
+}
+
+.hover-img {
+  filter: contrast(40%) blur(1px);
+}
+
+.album-img-container {
+  width: 72px;
+}
+
+.track-description {
+  flex: 1;
+  min-width: 0;
+  justify-content: space-between;
+}
+
+.menu-show-button {
+  width: 1em;
+  padding-right: 0.2em;
+  padding-left: 0.4em;
+  font-size: 1.2em;
+}
+
+.added-by {
+  font-size: 0.8em;
+  color: #797979;
+  margin: 0 0 0.3em;
+}
+
+.release-date {
+  font-size: 0.8em;
+  padding-top: 0.5em;
+}
+
+.track-name-container {
+  height: 1.5em;
+}
+
+.track-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1em;
+  padding-top: 0.5em;
+  color: #FF4E50;
+}
+
+.track-artists {
+  color: #797979;
+  font-size: 0.8em;
+  margin-top: 0.2em;
+}
+
+.menu-container {
+  height: 20px;
+}
+
+.green-button {
+  border-radius: 50%;
+  height: 2.7em;
+  width: 2.7em !important;
+  background: linear-gradient(128deg, #00B1AF 0%, rgba(249,212,35,1) 100%);
+  border: 0 !important;
+}

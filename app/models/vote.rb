@@ -4,8 +4,7 @@ class Vote < ApplicationRecord
 
   enum vote: [:up, :down]
 
-  validates :user_id, presence: true, uniqueness: { scope: :track_id }
-  validates :track_id, presence: true
+  validates :user_id, uniqueness: { scope: :track_id }
 
   after_commit :sync_tracks_with_spotify
 

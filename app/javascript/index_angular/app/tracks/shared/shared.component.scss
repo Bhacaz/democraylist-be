@@ -1,0 +1,44 @@
+#toolbar {
+  justify-content: space-between;
+  height: 1.8em;
+  padding-right: 0.3em;
+  padding-left: 0.3em;
+  //background-color: #FF4E50;
+  color: white;
+  background-color: #ff4e50;
+  margin-right: -1em;
+  margin-left: -1em;
+}
+
+#toolbar-icon{
+  width: 24px;
+}
+
+#icon-chevron {
+  font-size: 1em;
+}
+
+.track-name {
+  color: white;
+  font-size: 1em;
+  padding-bottom: 0.2em;
+}
+
+.track-description {
+  font-size: 0.8em;
+  color: white;
+}
+
+.track-header {
+  background-image: linear-gradient(#ff4e50 0%, #f9d423 100%);
+  padding: 0.8em 0.5em;
+  margin: 0 -1em;
+}
+
+.track-img {
+  box-shadow: -9px 9px 20px -10px black;
+}
+
+.track-info {
+  padding-left: 0.5em;
+}

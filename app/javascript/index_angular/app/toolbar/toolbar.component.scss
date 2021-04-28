@@ -1,0 +1,34 @@
+.flex-end {
+  justify-content: flex-end;
+}
+
+#toolbar {
+  height: 4em;
+  background-image: linear-gradient(#ff4e50 0%, #f9d423 100%);
+  margin-left: -1em;
+  margin-right: -1em;
+  padding-top: -1em;
+  color: white;
+}
+
+.user-image {
+  margin: 0.6em;
+  width: 35px;
+}
+
+.user-name {
+  height: 100%;
+}
+
+.home-title {
+  margin-left: 1em;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.toolbar-title {
+  padding-left: 0.3em;
+}

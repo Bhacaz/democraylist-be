@@ -1,0 +1,26 @@
+::ng-deep .p-table-thead {
+  font-size: 0.8em;
+}
+
+#stats-table {
+  margin-left: -1em;
+  margin-right: -1em;
+}
+
+th {
+  background-image: linear-gradient(#ff4e50 0%, #f9d423 100%) !important;
+  border: 0 !important;
+}
+
+td {
+  border: 0 !important;
+  text-align: center;
+}
+
+.user-cell {
+  font-weight: bold;
+}
+
+.stats-user-image {
+  margin-right: 0.4em;
+}
