@@ -4,4 +4,10 @@
 //
 // <%= javascript_pack_tag 'index_angular' %>
 
+import { enableProdMode } from '@angular/core'
+
+if (process.env.NODE_ENV === 'production') {
+    enableProdMode()
+}
+
 require('../index_angular')

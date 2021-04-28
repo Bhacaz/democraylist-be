@@ -58,6 +58,6 @@ export class TrackFinderComponent implements OnInit, OnDestroy {
   }
 
   disabledButton(spotifyId: string): boolean {
-    return this.trackIdsInPlaylist.includes(spotifyId);
+    return this.trackIdsInPlaylist.indexOf(spotifyId) > -1;
   }
 }

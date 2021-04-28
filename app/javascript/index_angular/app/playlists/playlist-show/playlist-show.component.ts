@@ -4,7 +4,6 @@ import {DemocraylistService} from '../../democraylist/democraylist.service';
 import {PlaylistChangeService} from '../../democraylist/playlist-change.service';
 import {MenuItem, MessageService} from 'primeng/api';
 import {copyToClipboard} from '../../common/copy-to-clipboard';
-import {environment} from '../../../environment';
 import {BottomSheetComponent} from '../../common/bottom-sheet/bottom-sheet.component';
 import templateString from './playlist-show.component.html'
 import stylesString from './playlist-show.component.scss'
@@ -102,7 +101,7 @@ export class PlaylistShowComponent implements OnInit, OnDestroy {
 
   copyShareLink = (event) => {
     this.democraylistService.getPlaylistShareLink(this.playlist.id).subscribe(data => {
-      const shareLink = environment.host + 'p/' + data.hash;
+      const shareLink = '/p/' + data.hash;
       if (navigator.share) {
         navigator.share({
           title: 'Democraylist',

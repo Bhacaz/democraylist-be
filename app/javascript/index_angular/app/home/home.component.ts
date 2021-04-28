@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DemocraylistService} from '../democraylist/democraylist.service';
-import {environment} from '../../environment';
 import {LocalstorageService} from '../common/localstorage.service';
 import templateString from './home.component.html'
 import stylesString from './home.component.scss'
@@ -61,9 +60,13 @@ export class HomeComponent implements OnInit {
         .then(registration => {
           registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: 'BEWrjXKrN7b4hUiqIV-cLYJvUjTI_ntQXV3kz7ZIWgBnbzSl-jvG8hzamjK71cKsBaSrF0pwwdl6TOEH9Lguk4Q'})
             .then(subscription => {
-              console.log('endpoint:', subscription.toJSON());
-              if (Notification.permission === 'granted') {
-                this.democraticPlaylist.addPushSubscriber(subscription.toJSON()).subscribe()
+              if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                  console.log(permission);
+                  if (permission === 'granted') {
+                    this.democraticPlaylist.addPushSubscriber(subscription.toJSON()).subscribe()
+                  }
+                })
               }
             });
         }).catch(error => console.log(error));

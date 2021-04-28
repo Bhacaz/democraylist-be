@@ -25,8 +25,6 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LoadingComponent } from './common/loading/loading.component';
 import {DialogModule} from 'primeng/dialog';
-// import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environment';
 import { PlaylistStatsComponent } from './playlists/playlist-stats/playlist-stats.component';
 import {TableModule} from 'primeng/table';
 import { PlaylistHeaderComponent } from './playlists/playlist-header/playlist-header.component';
