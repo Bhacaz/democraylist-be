@@ -58,7 +58,9 @@ export class HomeComponent implements OnInit {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js')
         .then(registration => {
-          registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: 'BEWrjXKrN7b4hUiqIV-cLYJvUjTI_ntQXV3kz7ZIWgBnbzSl-jvG8hzamjK71cKsBaSrF0pwwdl6TOEH9Lguk4Q'})
+          // dev BEWrjXKrN7b4hUiqIV-cLYJvUjTI_ntQXV3kz7ZIWgBnbzSl-jvG8hzamjK71cKsBaSrF0pwwdl6TOEH9Lguk4Q
+          // prod BHz4P66gP1n1P0MRRC9BZVvffVfQuP3INlE6ZWvMH8tcX8AA_GFk7pVx59YJJSLRke1zNPfqly3_oB5wbTJrb6o
+          registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: 'BHz4P66gP1n1P0MRRC9BZVvffVfQuP3INlE6ZWvMH8tcX8AA_GFk7pVx59YJJSLRke1zNPfqly3_oB5wbTJrb6o'})
             .then(subscription => {
               if (Notification.permission !== 'denied') {
                 Notification.requestPermission().then(permission => {
