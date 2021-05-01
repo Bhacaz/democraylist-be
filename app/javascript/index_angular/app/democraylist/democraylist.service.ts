@@ -8,14 +8,7 @@ import {interval, Observable} from 'rxjs';
 export class DemocraylistService {
   constructor(
     private http: HttpClient
-  ) {
-    // Every 25 minutes
-    interval(1000 * 60 * 25).subscribe(x => {
-      this.getRefreshAcessToken().subscribe(res => {
-        localStorage.setItem('access_token', res.access_token);
-      });
-    });
-  }
+  ) { }
 
   // USER
 
@@ -40,7 +33,7 @@ export class DemocraylistService {
   }
 
   logoutUser(): Observable<any> {
-    return this.http.post('api/auth/logout', {});
+    return this.http.post('auth/logout', {});
   }
 
   // PLAYLIST

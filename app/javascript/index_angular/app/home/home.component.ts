@@ -24,34 +24,19 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (localStorage.getItem('access_token')) {
       this.democraticPlaylist.getUser()
-        .subscribe(data => {
+        .subscribe(response => {
           this.isLoading = false;
-          this.user = data.user;
+          this.localstorageService.setItem('user', JSON.stringify(response.user));
           this.askForNotificationPermission();
-          }, error => this.redirectToLogin());
-    } else {
-      this.route.queryParams.subscribe(params => {
-        const code = params.code;
-        if (code) {
-          this.democraticPlaylist.getSpotifyToken(code).subscribe(response => {
-            this.isLoading = false;
-            this.user = response.user;
-            localStorage.setItem('access_token', response.access_token);
-          });
-        } else {
-          this.isLoading = false;
-          this.redirectToLogin();
-        }
-      });
-    }
-  }
-
-  redirectToLogin() {
-    this.localstorageService.removeItem('access_token');
-    this.localstorageService.removeItem('user');
-    this.router.navigate(['/login']);
+          const redirectUrl = sessionStorage.getItem('redirectUrl');
+          if (redirectUrl) {
+            sessionStorage.removeItem('redirectUrl');
+            this.router.navigateByUrl(redirectUrl);
+          } else {
+            this.router.navigate(['/']);
+          }
+          })
   }
 
   askForNotificationPermission() {

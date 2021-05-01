@@ -4,21 +4,12 @@ class AuthController < ApplicationApiController
 
   skip_before_action :authenticate_request, except: [:user, :refresh_access_token]
 
-  # def spotify
-  #   @spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
-  #   session[:spotify_user] = @spotify_user.to_hash
-  #
-  #   user = User.find_or_initialize_by(email: @spotify_user.email)
-  #   user.spotify_id = @spotify_user.id
-  #   user.name = @spotify_user.display_name
-  #   user.save!
-  #   redirect_to user_url(user)
-  # end
-
   def login; end
 
   def logout
     User.find(auth_user.id).update! access_token: nil, expires_at: nil, refresh_token: nil
+    session[:current_user_id] = nil
+    session[:access_token] = nil
     render json: :ok
   end
 
@@ -27,13 +18,13 @@ class AuthController < ApplicationApiController
       response_type: 'code',
       client_id: ENV['spotify_client_id'],
       scope: 'user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-read-playback-state user-modify-playback-state user-read-recently-played',
-      redirect_uri: ENV['democraylist_fe_host'] + '/auth/spotify/callback',
+      redirect_uri: request.protocol + request.host_with_port + '/auth/spotify/callback',
     }
 
     render json: { url: 'https://accounts.spotify.com/authorize?' + query_params.to_query }
   end
 
-  def spotify_get_token
+  def spotify_auth_callback
     # Get token from code
     body = {
       grant_type: 'authorization_code',
@@ -70,18 +61,19 @@ class AuthController < ApplicationApiController
     user.access_token = access_token
     user.refresh_token = credentials['refresh_token']
     user.expires_at = expires_at
-    user.save! if user.changed?
+    user.save!
 
-    r_user = RSpotify::User.new(**Hashie::Mash.new(response), 'credentials' => credentials)
+    RSpotify::User.new(**Hashie::Mash.new(response), 'credentials' => credentials)
 
-    # Every time the ower of the playlist login sync own playlists
+    # Every time the owner of the playlist login sync own playlists
     user.playlists.each { |playlist| SyncPlaylistJob.perform_later(playlist.id) }
-
-    render json: { access_token: access_token, user: r_user.as_json.merge(user.as_json) }
+    session[:current_user_id] = user.id
+    session[:access_token] = access_token
+    redirect_to root_path
   end
 
   def user
-    render json: { user: auth_user }
+    render json: { user: spotify_user.as_json.merge(auth_user.as_json) }
   end
 
   def refresh_access_token

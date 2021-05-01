@@ -1,28 +1,25 @@
 module ApplicationHelper
   def spotify_user
-    @spotify_user ||= RSpotify::User.new(session[:spotify_user])
+    @spotify_user ||= RSpotify::User.find(auth_user.spotify_id)
   end
 
   def auth_user
     @auth_user ||=
       begin
-        token = request.headers['HTTP_AUTHORIZATION'].split(' ').last
-        user = User.find_by(access_token: token)
+        user = User.find(session[:current_user_id])
         return unless user # Return nil if no user is found
-
-        return if user.expires_at.nil? || user.expires_at < Time.now.to_i
 
         if RSpotify::User.class_variable_defined?('@@users_credentials')
           user_credentials = RSpotify::User.class_variable_get('@@users_credentials')
-          user_credentials[user.spotify_id]['token'] = token
+          user_credentials[user.spotify_id]['token'] = session[:access_token]
         end
         user
       end
   end
 
   def authenticate_request
-    if request.headers['HTTP_AUTHORIZATION'].split(' ').first != 'Bearer' || auth_user.nil?
-      raise ApplicationApiController::NotAuthorized
+    if session[:current_user_id].nil? || session[:access_token].nil?
+      head :forbidden
     end
   end
 end
