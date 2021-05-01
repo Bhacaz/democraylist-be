@@ -20,24 +20,21 @@ class Playlist < ApplicationRecord
     end
   end
 
-  def archived_tracks
-    @archived_tracks ||= begin
-                           real_track_ids = real_tracks.map(&:id)
-                           preload_tracks.to_a.select do |track|
-                             next false if real_track_ids.include? track.id
+  def archived_tracks(auth_user_id)
+     real_track_ids = real_tracks.map(&:id)
+     preload_tracks.to_a.select do |track|
+       next false if real_track_ids.include? track.id
 
-                             date = track.votes.to_a.any? ? track.votes.max_by(&:updated_at).updated_at : track.created_at
-                             date < 2.weeks.ago
-                           end
-    end
+       track.votes.to_a.any? { |vote| vote.user_id == auth_user_id }
+     end
   end
 
-  def submission_tracks
-    @submission_tracks ||= begin
-      real_tracks_ids = real_tracks.map(&:id)
-      other_track_ids = real_tracks_ids.concat(archived_tracks.map(&:id))
+  def submission_tracks(auth_user_id)
+    real_track_ids = real_tracks.map(&:id)
+    preload_tracks.to_a.select do |track|
+      next false if real_track_ids.include? track.id
 
-      tracks.reject { |track| other_track_ids.include? track.id }.sort_by { |track| -track.created_at.to_i }
+      track.votes.to_a.none? { |vote| vote.user_id == auth_user_id }
     end
   end
 end
