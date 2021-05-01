@@ -2,7 +2,7 @@ module Api
 class PlaylistsController < ApplicationApiController
   INDEX_EXCLUDED_ATTRIBUTES = [:tracks, :tracks_submission, :tracks_archived].freeze
 
-  def index
+  def my
     attributes = PlaylistSerializer.attributes_to_serialize.map(&:key) - INDEX_EXCLUDED_ATTRIBUTES
     query = Playlist.includes(:subscriptions, :user, tracks: [:votes, :user]).where(user_id: auth_user.id).order(created_at: :desc)
     render json: PlaylistSerializer.new(query, fields: attributes, params: { auth_user_id: auth_user.id })

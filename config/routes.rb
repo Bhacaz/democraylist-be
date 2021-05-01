@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :home, only: :index
 
   namespace :api do
+    resources :home, only: :index
+
     resources :users do
       get :playlists
       post '/push_notif_preference', to: 'users#create_push_notif_preference', on: :collection
@@ -15,7 +17,8 @@ Rails.application.routes.draw do
     end
 
     resource :playlists do
-      get '/', to: 'playlists#index'
+      get '/home', to: 'playlists#home'
+      get '/my', to: 'playlists#my'
       get '/explore', to: 'playlists#explore'
       get '/subscriptions', to: 'playlists#subscriptions'
       get '/accessible', to: 'playlists#accessible'

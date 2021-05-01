@@ -36,10 +36,14 @@ export class DemocraylistService {
     return this.http.post('auth/logout', {});
   }
 
+  getHome(): Observable<any> {
+    return this.http.get('api/home');
+  }
+
   // PLAYLIST
 
   getPlaylists(): Observable<any> {
-    return this.http.get('api/playlists');
+    return this.http.get('api/playlists/my');
   }
 
   newPlaylist(playlist: any): Observable<any> {
