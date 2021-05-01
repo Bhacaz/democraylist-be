@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/auth/spotify/callback', to: 'home#index'
+  get '/auth/spotify/callback', to: 'auth#spotify_auth_callback'
   get '/auth/spotify_login_url', to: 'auth#spotify_login_url'
   get '/auth/user', to: 'auth#user'
   get '/auth/refresh_access_token', to: 'auth#refresh_access_token'
