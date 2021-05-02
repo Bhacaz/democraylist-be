@@ -19,12 +19,12 @@ export class HomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private democraticPlaylist: DemocraylistService,
+    private democraticService: DemocraylistService,
     private localstorageService: LocalstorageService,
   ) { }
 
   ngOnInit(): void {
-      this.democraticPlaylist.getUser()
+      this.democraticService.getUser()
         .subscribe(response => {
           this.isLoading = false;
           this.localstorageService.setItem('user', JSON.stringify(response.user));
@@ -34,9 +34,9 @@ export class HomeComponent implements OnInit {
             sessionStorage.removeItem('redirectUrl');
             this.router.navigateByUrl(redirectUrl);
           } else {
-            this.router.navigate(['/']);
+            this.fetchHome();
           }
-          })
+        })
   }
 
   askForNotificationPermission() {
@@ -51,12 +51,19 @@ export class HomeComponent implements OnInit {
                 Notification.requestPermission().then(permission => {
                   console.log(permission);
                   if (permission === 'granted') {
-                    this.democraticPlaylist.addPushSubscriber(subscription.toJSON()).subscribe()
+                    this.democraticService.addPushSubscriber(subscription.toJSON()).subscribe()
                   }
                 })
               }
             });
         }).catch(error => console.log(error));
     }
+  }
+
+  fetchHome() {
+    this.democraticService.getHome().subscribe(data => {
+      this.playlists = data;
+      this.isLoading = false
+    })
   }
 }

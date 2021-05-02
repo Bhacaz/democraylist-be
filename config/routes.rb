@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   resources :home, only: :index
 
   namespace :api do
-    resources :home, only: :index
+    resources :home do
+      get '/', to: 'home#index'
+    end
 
     resources :users do
       get :playlists
@@ -17,7 +19,6 @@ Rails.application.routes.draw do
     end
 
     resource :playlists do
-      get '/home', to: 'playlists#home'
       get '/my', to: 'playlists#my'
       get '/explore', to: 'playlists#explore'
       get '/subscriptions', to: 'playlists#subscriptions'

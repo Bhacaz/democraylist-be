@@ -11,19 +11,8 @@
       <span class="add-playlist-button"><i class="fa fa-plus"></i></span>
     </a>
   </div>
-  <app-playlist-list></app-playlist-list>
 
-  <div>
-    <h2>
-      <a>Subscriptions</a>
-    </h2>
-    <app-subscriptions></app-subscriptions>
-  </div>
-
-  <div>
-    <h2>
-      <a>Explore</a>
-    </h2>
-    <app-explore></app-explore>
+  <div *ngFor="let playlist of playlists">
+    <app-playlist-summary [playlist]="playlist"></app-playlist-summary>
   </div>
 </div>
