@@ -65,7 +65,7 @@ export class TrackSummaryComponent implements OnInit, OnDestroy, OnChanges {
     this.focus = this.track.id === this.trackId;
     this.showVotebutton = this.playlist.user_id === this.userLocalStorage.id ||
       this.playlist.subscribed;
-    this.track.artistName = this.track.artists.map(artist => artist.name).join(', ');
+    this.track.artistNames = this.track.artists.map(artist => artist.name).join(', ');
     if (!this.track.playlist_id) { this.initReleaseDate(); }
   }
 
