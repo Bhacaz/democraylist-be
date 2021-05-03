@@ -66,4 +66,5 @@ export class HomeComponent implements OnInit {
       this.isLoading = false
     })
   }
+
 }

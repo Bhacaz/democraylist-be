@@ -1,1 +1,8 @@
 
+<span>
+  <img class="playlist-img" [src]="playlist.image_url || './images/playlistPlaceholder.png'"
+       (click)="showPlaylist()">
+  <div class="title">
+    {{playlist.name}}
+  </div>
+</span>

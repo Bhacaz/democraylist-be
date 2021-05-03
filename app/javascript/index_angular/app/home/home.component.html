@@ -14,7 +14,7 @@
   <div id="playlist-list-container" >
 <!--      <app-playlist-cover [playlist]="playlist"></app-playlist-cover>-->
     <div class="img-container" *ngFor="let playlist of playlists">
-      <img class="playlist-img" [src]="playlist.image_url || './images/playlistPlaceholder.png'" >
+        <app-playlist-cover [playlist]="playlist"></app-playlist-cover>
     </div>
   </div>
 </div>
