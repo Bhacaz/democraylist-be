@@ -15,3 +15,21 @@ a {
 .add-playlist-button {
   font-size: 1.2em;
 }
+
+#playlist-list-container {
+  display: flex;
+  /* Put a card in the next row when previous cards take all width */
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -1em -1em;
+}
+
+.img-container {
+  flex: 1;
+  min-width: 10em;
+  max-width: 50%;
+}
+
+.playlist-img {
+  width: 100%;
+}

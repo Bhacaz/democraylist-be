@@ -39,6 +39,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {ToastModule} from 'primeng/toast';
 import { PlaylistSharedStartpointComponent } from './playlists/playlist-shared-startpoint/playlist-shared-startpoint.component';
 import {APP_BASE_HREF} from "@angular/common";
+import {PlaylistCoverComponent} from "index_angular/app/playlists/playlist-cover/playlist-cover.component";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {APP_BASE_HREF} from "@angular/common";
     BottomSheetComponent,
     BackToolbarComponent,
     PlayslitAddTrackComponent,
-    PlaylistSharedStartpointComponent
+    PlaylistSharedStartpointComponent,
+    PlaylistCoverComponent
   ],
   imports: [
     HttpClientModule,
