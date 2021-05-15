@@ -1,8 +1,10 @@
 
-<span>
+<div class="img-container">
+
   <img class="playlist-img" [src]="playlist.image_url || './images/playlistPlaceholder.png'"
        (click)="showPlaylist()">
+  <img class="playlist-img-reverse playlist-img" [src]="playlist.image_url || './images/playlistPlaceholder.png'">
   <div class="title">
     {{playlist.name}}
   </div>
-</span>
+</div>
