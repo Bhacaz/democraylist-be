@@ -3,8 +3,13 @@
 
   <img class="playlist-img" [src]="playlist.image_url || './images/playlistPlaceholder.png'"
        (click)="showPlaylist()">
-  <img class="playlist-img-reverse playlist-img" [src]="playlist.image_url || './images/playlistPlaceholder.png'">
-  <div class="title">
-    {{playlist.name}}
+<!--  <div class="playlist-img-reverse playlist-img">-->
+<!--    {{playlist.name}}-->
+<!--  </div>-->
+  <img class="playlist-img-reverse" [src]="playlist.image_url || './images/playlistPlaceholder.png'">
+  <div class="container title">
+    <div class="content-center horizontal-center">
+      {{playlist.name}}
+    </div>
   </div>
 </div>

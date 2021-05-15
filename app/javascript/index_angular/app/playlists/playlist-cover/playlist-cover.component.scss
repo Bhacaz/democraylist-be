@@ -1,17 +1,18 @@
 
 .playlist-img {
   width: 100%;
-  border-radius: 8px 8px 0px 0;
+  border-radius: 10px 10px 0px 0;
 }
 
 .title {
-  position: absolute;
+  position: relative;
   height: 4em;
-  margin-top: -4.0em;
+  margin-top: -4.24em;
   /* background-color: white; */
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.9);
   padding-left: 0.4em;
   padding-right: 0.4em;
+  border-radius: 0 0 10px 10px;
 }
 
 .img-container {
@@ -22,12 +23,19 @@
 }
 
 .playlist-img-reverse {
+  width: 100%;
   -webkit-transform: scaleY(-1);
   transform: scaleY(-1);
   margin-top: -0.4em;
   height: 4em;
   object-fit: cover;
   object-position: 0 100%;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
+  border-radius: 10px 10px 0px 0;
+  //background: rgba(255, 255, 255, 0.9);
+  //filter: blur(5px);
+  //-webkit-filter: blur(5px);
+}
+
+.horizontal-center {
+  margin: auto;
 }
