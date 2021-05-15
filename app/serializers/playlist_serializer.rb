@@ -3,13 +3,7 @@ class PlaylistSerializer
 
   attributes *Playlist.attribute_names.map(&:to_sym)
 
-  attribute :image_url do |object|
-    next unless object.spotify_id
-
-    Rails.cache.fetch("playlist-image_#{object.spotify_id}", expires_in: 5.minutes) do
-      RSpotify::Playlist.find_by_id(object.spotify_id).images.first&.fetch('url')
-    end
-  end
+  attribute :image_url
 
   attribute :uri do |object|
     "spotify:playlist:#{object.spotify_id}"
