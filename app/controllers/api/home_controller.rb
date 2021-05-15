@@ -9,7 +9,7 @@ module Api
               .sort_by do |playlist|
         -(playlist&.tracks&.map { |track| track.created_at.to_i }.max || playlist.created_at.to_i)
       end
-      data = query.map { |playlist| { name: playlist.name, image_url: playlist.image_url } }
+      data = query.map { |playlist| { id: playlist.id, name: playlist.name, image_url: playlist.image_url } }
       render json: data
     end
   end
