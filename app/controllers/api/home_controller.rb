@@ -6,10 +6,14 @@ module Api
 
       query = Playlist.where(id: playlist_subscrib_ids.concat(my_playlist_ids))
               .includes(:tracks)
-              .sort_by do |playlist|
+
+      query = query.where('name LIKE ?', "%#{params[:q]}%") if params[:q]
+      query = query.sort_by do |playlist|
         -(playlist&.tracks&.map { |track| track.created_at.to_i }.max || playlist.created_at.to_i)
       end
-      data = query.map { |playlist| { id: playlist.id, name: playlist.name, image_url: playlist.image_url } }
+      data = query.map do |playlist|
+        { id: playlist.id, name: playlist.name, image_url: playlist.image_url }
+      end
       render json: data
     end
   end

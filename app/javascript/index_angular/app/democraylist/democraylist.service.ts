@@ -36,8 +36,13 @@ export class DemocraylistService {
     return this.http.post('auth/logout', {});
   }
 
-  getHome(): Observable<any> {
-    return this.http.get('api/home');
+  getHome(query: string = null): Observable<any> {
+    if (query) {
+      const params = new HttpParams().set('q', query);
+      return this.http.get('api/home', {params});
+    } else {
+      return this.http.get('api/home');
+    }
   }
 
   // PLAYLIST

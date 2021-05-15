@@ -10,7 +10,7 @@
       <div id="playlist-search-container">
         <span class="p-input-icon-left">
           <i class="fa fa-search"></i>
-          <input type="text" pInputText placeholder="Search">
+          <input type="text" pInputText placeholder="Search" [(ngModel)]="query" name="query" (ngModelChange)='searchPlaylists()'>
         </span>
       </div>
     </div>

@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   user;
   playlists: any = [];
   isLoading: boolean = true;
+  query: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,4 +68,9 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  searchPlaylists() {
+    this.democraticService.getHome(this.query).subscribe(data => {
+      this.playlists = data;
+    })
+  }
 }
