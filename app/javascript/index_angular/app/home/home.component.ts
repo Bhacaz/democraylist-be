@@ -30,12 +30,11 @@ export class HomeComponent implements OnInit {
           this.isLoading = false;
           this.localstorageService.setItem('user', JSON.stringify(response.user));
           this.askForNotificationPermission();
+          this.fetchHome();
           const redirectUrl = sessionStorage.getItem('redirectUrl');
           if (redirectUrl) {
             sessionStorage.removeItem('redirectUrl');
             this.router.navigateByUrl(redirectUrl);
-          } else {
-            this.fetchHome();
           }
         })
   }
