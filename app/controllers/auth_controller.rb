@@ -18,7 +18,7 @@ class AuthController < ApplicationApiController
       response_type: 'code',
       client_id: ENV['spotify_client_id'],
       scope: 'user-read-email playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-read-playback-state user-modify-playback-state user-read-recently-played',
-      redirect_uri: request.protocol + request.host_with_port + '/auth/spotify/callback',
+      redirect_uri: "#{request.protocol}#{request.host_with_port}/auth/spotify/callback",
     }
 
     render json: { url: 'https://accounts.spotify.com/authorize?' + query_params.to_query }
