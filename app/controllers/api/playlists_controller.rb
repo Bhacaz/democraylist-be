@@ -130,7 +130,7 @@ class PlaylistsController < ApplicationApiController
       playlist.submission_tracks(auth_user.id).map(&:uri)
     when 'unvoted'
       Track.includes(:votes)
-        .where(id: ids, playlist_id: params[:id])
+        .where(playlist_id: params[:id])
         .reject { |track| track.votes.map(&:user_id).include?(auth_user.id) }
         .map(&:uri)
     when 'upvoted'
