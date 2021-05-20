@@ -127,13 +127,11 @@ class PlaylistsController < ApplicationApiController
     when 'tracks'
       playlist.real_tracks.map(&:uri)
     when 'submissions'
-      playlist.submission_tracks.map(&:uri)
+      playlist.submission_tracks(auth_user.id).map(&:uri)
     when 'unvoted'
-      ids = playlist.real_tracks.map(&:id).concat(playlist.submission_tracks.map(&:id))
       Track.includes(:votes)
-        .where(id: ids)
+        .where(id: ids, playlist_id: params[:id])
         .reject { |track| track.votes.map(&:user_id).include?(auth_user.id) }
-        .sort_by { |track| ids.index(track.id) }
         .map(&:uri)
     when 'upvoted'
       Vote.joins(track: :playlist)
